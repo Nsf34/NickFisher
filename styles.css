@@ -1,0 +1,309 @@
+* {
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: beige;
+  width: 100vw;
+}
+
+header {
+  background-color: #ad603ff9;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: auto;
+  background-color: #a45533f9;
+}
+
+.logo img {
+  max-width: 100%;
+  height: auto;
+  margin-left: 40px;
+}
+
+.nav-flex ul {
+  display: flex;
+  margin: auto;
+  padding: 20px 50px;
+  list-style-type: none;
+  gap: 20px;
+  font-size: 17px;
+}
+
+.nav-flex li {
+  margin: 0;
+}
+
+.nav-flex a {
+  color: #fff;
+  text-decoration: solid;
+  padding: 40px;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+}
+
+.content-container {
+  padding: 30px;
+  display: flex;
+  gap: 30px;
+}
+
+.important-information {
+  text-align: center;
+  font-size: 14pt;
+  margin: 70px;
+}
+
+.important-information h1 {
+  border-style: dashed;
+}
+
+.footer-copyright {
+  padding: 20px;
+}
+.festival-photos {
+  padding: 0 10%;
+  display: flex;
+}
+
+.main-content {
+  flex: 1;
+  padding-bottom: 100px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.main-content .box-half {
+  width: 49%;
+  background-color: darksalmon;
+  height: 300px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-content .box-full {
+  background-color: darksalmon;
+  margin-bottom: 20px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.box img {
+  height: 100% !important;
+  object-fit: contain;
+}
+
+.festival-photos img {
+  height: auto;
+  max-width: 50%;
+  box-shadow: 15px 15px 15px #d6864c;
+}
+
+.content-container {
+  display: flex;
+}
+
+.sidebar {
+  width: 30%;
+}
+
+.sidebar-content h3 {
+  margin-top: 0px;
+}
+
+.sidebar-content {
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+  border-radius: 2px;
+}
+
+.map{
+    height: 500px !important;
+}
+
+.half-sidebar-content p{
+    height:50%;
+}
+
+footer {
+  background-color: #a65936;
+  display: flex;
+  gap: 20px;
+  padding: 5% 10%;
+}
+
+.footer-event {
+  display: flex;
+}
+
+.event-dates,
+.event-times {
+  width: 50%;
+  display: flex;
+  justify-content: flex-start;
+  padding: 20px;
+}
+
+.footer-copyright {
+  border: 1px solid red;
+  width: 33.33%;
+}
+
+.footer-event {
+  border: 1px solid red;
+  flex: 1;
+  display: flex;
+  gap: 20px;
+}
+
+.history h2 {
+  display: flex;
+  font-size: 16pt;
+  justify-content: center;
+  padding: 10px;
+  border-style: dashed;
+  color: white;
+}
+
+.history p {
+  font-size: 14pt;
+  color: white;
+}
+
+.activities-flex {
+  display: flex;
+  flex-wrap: nowrap;
+  height: 50px;
+  padding: 50px;
+}
+
+.activities-map {
+  display: flex;
+  flex: 1;
+  allign-items: center;
+  justify-content: left;
+  padding: 50px;
+  padding-right: 40px;
+}
+
+.activities-map img {
+  max-width: 45%;
+  box-shadow: 15px 15px 15px #a15824;
+  height: auto;
+}
+
+.activities-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.entertainment,
+.vendor-info {
+  display: flex;
+  gap: 30px;
+  padding: 30px;
+  flex-direction: column;
+  flex: 1;
+}
+
+.faq {
+  display: flex;
+  padding: 20px;
+}
+
+.faq-sidebar {
+  flex: 1;
+}
+
+.right-side-content {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.parking-map {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 667px) {
+  .content-container {
+    flex-direction: column !important;
+  }
+
+  .main-content {
+    flex-direction: column !important;
+    padding-bottom: 0px;
+  }
+
+  .main-content .box {
+    width: 100%;
+  }
+
+  .sidebar {
+    width: 100%;
+  }
+
+  footer {
+    flex-direction: column !important;
+    height: auto !important;
+    padding: 20px;
+  }
+
+  .footer-copyright {
+    width: 100%;
+  }
+
+  .footer-event {
+    flex-direction: column;
+  }
+
+  .box-half {
+    width: 100% !important;
+  }
+
+  header {
+    flex-direction: column !important;
+    padding: 0px;
+  }
+
+  .logo img {
+    margin: 0;
+    padding: 20px;
+  }
+
+  .nav-flex ul {
+    padding: 20px;
+    gap: 10px;
+    font-size: 15px;
+  }
+
+}
