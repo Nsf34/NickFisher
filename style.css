@@ -1,0 +1,222 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffe0f0; /* Soft pink background */
+    color: #333;
+}
+.header {
+    background-color: #ff8096; /* Deeper love color */
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+}
+.nav-bar {
+    display: flex;
+    justify-content: center;
+    background-color: #ffccd1; /* Lighter shade for navigation */
+    padding: 10px 0;
+
+}
+.nav-link {
+    margin: 0 15px;
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+    font-size: 18px;
+}
+.nav-link:hover {
+    color: #ff8096;
+}
+.timer {
+    font-family: 'Cursive', sans-serif;
+    color: #6a1b9a;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0; /* Removes default margin */
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 0 10%;
+}
+.milestone {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
+    margin-bottom: 10px;
+}
+.milestone-image {
+    width: 300px; /* Fixed size, adjust as needed */
+    height: auto;
+    border-radius: 8px;
+    transition: transform 0.3s;
+}
+.milestone-image:hover {
+    transform: scale(2);
+}
+.milestone-text {
+    flex: 1;
+    font-family: 'Cursive', sans-serif;
+    color: #ff8096;
+    margin-bottom: 10px;
+    font-size: 15px;
+}
+.timer-title {
+    font-family: 'Cursive', sans-serif;
+    color: #ff8096;
+    margin-bottom: 10px;
+    font-size: 28px;
+}
+
+.timer-container {
+    background-color: #fff; /* Or any color that matches your theme */
+    border-radius: 15px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
+    padding: 25px;
+    text-align: center;
+    margin: 20px auto;
+    width: fit-content;
+    padding-bottom: 30px;
+}
+
+.gallery-container {
+    text-align: center;
+    max-width: 600px;
+    margin: auto;
+}
+
+.simple-carousel {
+    position: relative;
+    margin: auto;
+    overflow: hidden;
+    width: 100%; /* Adjust as needed */
+}
+
+.carousel-slides {
+    display: flex;
+    width: 100%;
+    flex-direction: row; /* Ensure slides are in a row */
+    transition: transform 0.5s ease; /* Add transition for smooth sliding */
+}
+
+.slide {
+    flex: 0 0 100%; /* Each slide takes up 100% of the carousel width */
+    max-width: 100%;
+    display: flex; /* Use flexbox to align image inside slide */
+    justify-content: center; /* Center image horizontally */
+    align-items: center; /* Center image vertically */
+}
+
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    background-color: white; /* White background */
+    color: black; /* Black arrow color for contrast */
+    border: 1px solid #ddd; /* Light border for definition */
+    border-radius: 50%; /* Circular buttons */
+    font-size: 30px;
+    width: 50px; /* Fixed width */
+    height: 50px; /* Fixed height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7; /* Slightly transparent */
+    transition: opacity 0.3s;
+}
+
+.slide-image {
+    max-width: 100%; /* Ensures image does not exceed the slide width */
+    height: auto; /* Maintains the image aspect ratio */
+    max-height: 600px;
+}
+
+.carousel-control:hover {
+    opacity: 1; /* Fully opaque on hover */
+}
+
+.carousel-control.left {
+    left: 10px;
+    z-index: 1000;
+}
+
+.carousel-control.right {
+    right: 10px;
+}
+
+.gallery-title {
+    font-family: 'Cursive', sans-serif; /* Or any font that you are using on your index page */
+    color: #ff8096; /* A color that matches your theme */
+    margin-bottom: 10px;
+    font-size: 28px; /* Adjust the size as needed */
+    background-color: #fff; /* Or any color that matches your theme */
+    border-radius: 15px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
+    padding: 25px;
+    text-align: center;
+
+}
+
+.love-second {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
+    padding: 25px;
+    text-align: center;
+    margin: 20px auto;
+    width: fit-content;
+    padding-bottom: 30px;
+    font-family: 'Cursive', sans-serif;
+    color: #ff8096;
+    margin-bottom: 35px;
+    font-size: 30px;
+}
+
+.letter {
+    background: url('parchment-bg.png') no-repeat center center;
+    background-size: cover;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: 'Cursive', sans-serif;
+    color: #333;
+    position: relative;
+    border: 1px solid #a67c52;
+    border-radius: 8px;
+}
+
+.letter-header, .letter-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.letter-header {
+    margin-bottom: 50px; /* Adjust as needed */
+}
+
+.letter-body {
+    flex-grow: 1;
+}
+
+.letter-footer {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+/* Add this style to make the letter look more like a scroll */
+.letter {
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
+    background-color: #fdf4e3; /* Fallback for browsers that don't support gradients */
+    background-image: linear-gradient(to bottom, #fdf4e3 50%, #f4e4d7 100%);
+    overflow: hidden;
+}
+
