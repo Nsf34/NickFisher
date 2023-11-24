@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
-    var password = "YourPassword"; // Replace with your desired password
+    var password = "salmonlover"; // Replace with your desired password
 
     var correctPassword = false;
     while (!correctPassword) {
-        var userPassword = prompt("Please enter the password to view this page:");
+        var userPassword = prompt("What is our favorite Plum Tree roll (all lowercase one word)?:");
 
         if (userPassword === null) {
-            window.location = "http://www.your-redirect-url.com"; // Redirect if cancel is clicked
+            window.location = "https://txreport.com/"; // Redirect if cancel is clicked
             break;
         } else if (userPassword === password) {
             correctPassword = true;
