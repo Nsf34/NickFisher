@@ -181,43 +181,171 @@ body {
     font-size: 30px;
 }
 
-.letter {
-    background: url('parchment-bg.png') no-repeat center center;
-    background-size: cover;
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    font-family: 'Cursive', sans-serif;
-    color: #333;
-    position: relative;
-    border: 1px solid #a67c52;
-    border-radius: 8px;
+
+.envelope-container {
+    text-align: center;
+    margin: 20px;
 }
 
-.letter-header, .letter-footer {
-    display: flex;
-    justify-content: space-between;
+#envelope {
+    cursor: pointer;
+    width: 200px; /* adjust as needed */
 }
 
-.letter-header {
-    margin-bottom: 50px; /* Adjust as needed */
+#open-text {
+    cursor: pointer;
+    color: #ff8096;
+    font-size: 18px;
+
 }
 
-.letter-body {
-    flex-grow: 1;
+/* Modal CSS */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.9);
 }
 
-.letter-footer {
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+.close {
     position: absolute;
-    bottom: 20px;
-    right: 20px;
+    top: 15px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-/* Add this style to make the letter look more like a scroll */
-.letter {
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
-    background-color: #fdf4e3; /* Fallback for browsers that don't support gradients */
-    background-image: linear-gradient(to bottom, #fdf4e3 50%, #f4e4d7 100%);
-    overflow: hidden;
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -50px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
 }
 
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+
+.envelope-container {
+    text-align: center;
+    margin: 20px;
+}
+
+#envelope {
+    cursor: pointer;
+    width: 600px; /* adjust as needed */
+}
+
+#open-text {
+    cursor: pointer;
+    color: #ff8096;
+    font-size: 24px;
+    align-items: center;
+    gap: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 50px; /* reduced padding */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.9);
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%; /* adjusted width */
+    max-height: 80vh; /* maximum height */
+    object-fit: contain; /* maintain aspect ratio */
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 45%; /* adjusted vertical position */
+    width: auto;
+    padding: 16px;
+    margin-top: -50px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+}
+
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 600px) {
+    .modal-content {
+        max-width: 100%;
+        max-height: 70vh;
+    }
+}
+
+@media screen and (max-height: 500px) {
+    .modal-content {
+        max-height: 60vh;
+    }
+}

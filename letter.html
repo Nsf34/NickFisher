@@ -16,17 +16,18 @@
         <a href="letter.html" class="nav-link">Letter</a>
     </nav>
     <main class="content">
-        <article class="letter">
-            <section class="letter-header">
-                <p>Dear Bella,</p>
-            </section>
-            <section class="letter-body">
-                <p>Filler text here...</p>
-            </section>
-            <section class="letter-footer">
-                <p>Love, Nick</p>
-            </section>
-        </article>
+        <div class="envelope-container">
+            <p id="open-text">❤️CLICK ME TO OPEN❤️</p>
+            <img src="closed-envelope.png" alt="Closed Envelope" id="envelope">
+        </div>
+        <div id="letterModal" class="modal">
+            <span class="close">&times;</span>
+            <img class="modal-content" id="letterImg">
+            <div class="modal-caption"></div>
+            <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+            <a class="next" onclick="changeSlide(1)">&#10095;</a>
+        </div>
     </main>
+    <script src="letter.js"></script>
 </body>
 </html>
