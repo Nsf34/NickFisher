@@ -59,7 +59,7 @@ body {
     transition: transform 0.3s;
 }
 .milestone-image:hover {
-    transform: scale(2);
+    transform: scale(1.6);
 }
 .milestone-text {
     flex: 1;
