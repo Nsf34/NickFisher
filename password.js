@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    var password = "salmonlover"; // Replace with your desired password
+    var password = "salmonlover135!"; // Replace with your desired password
 
     var correctPassword = false;
     while (!correctPassword) {
