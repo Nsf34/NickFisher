@@ -1,4 +1,3 @@
-[seurat-brain-v2-build-playbook_new.md](https://github.com/user-attachments/files/25826986/seurat-brain-v2-build-playbook_new.md)
 # Seurat Brain v2 — Complete Build Playbook
 
 ## Design Principles
@@ -129,6 +128,7 @@ PART IV: DATA PIPELINE (Dropbox API)
   Wave 4-QG               Quality gate: test scan + extract on 1 client
 
 PART V: DIGESTION
+  Wave 5-Pre [1 session]  Scan + digest Public Drive (training, templates, process resources) SEQUENTIAL
   Wave 5-A [1 session]    Digest active clients batch 1 (5 priority)    SEQUENTIAL
   Wave 5-B [1 session]    Digest active clients batch 2                 ──┐
   Wave 5-C [1 session]    Build theme hubs from emerged data            ├─ PARALLEL (after 5-A)
@@ -1566,6 +1566,72 @@ All tests must pass before proceeding to Wave 5.
 
 ## PART V: DIGESTION
 
+### Wave 5-Pre — Scan + Digest Public Drive (SEQUENTIAL — before client digestion)
+
+```
+Read _build/CONTEXT.md for project context.
+⚠️ WRITE CHECK: Verify your working directory is seurat-brain-v2 (not seurat-brain). All writes go to v2 only.
+Read _build/decisions.md — check for any Wave 4 API discoveries that affect scanning non-client paths.
+COORDINATION: Log Public Drive structure discoveries and any process knowledge gaps found to _build/decisions.md. Wave 5-A needs these.
+
+YOUR TASK: Scan and digest the firm's Public Drive. This contains training materials, process templates, growth papers, brand specs, and internal resources that provide foundational firm context beyond client work. Wave 3 distilled process knowledge from the old brain's docs, but those docs may not have fully captured everything on the Public Drive. This wave fills those gaps.
+
+STEP 1: Scan the Public Drive
+python digestion_engine.py scan --root "/Nick Fisher/Seurat Group -- Public Drive"
+(The engine works on any Dropbox path, not just Client Folder.)
+
+Review the scan output. Identify high-value folders — likely candidates:
+- 04 Resources/ — process resources, templates, training materials
+- Growth Papers/ or similar — published thought leadership
+- Training/ or Onboarding/ — analyst training decks
+- Templates/ — deliverable templates, slide banks
+- Any folder with methodology guides, frameworks, or how-to materials
+
+STEP 2: Extract high-value content
+python digestion_engine.py extract --root "/Nick Fisher/Seurat Group -- Public Drive" --latest-only --limit 50
+(Start with 50 files. Prioritize training decks, methodology guides, and templates over administrative files.)
+
+Skip: HR docs, expense templates, IT setup guides, calendar invites, headshots, logos, administrative files.
+Focus: Anything that teaches someone HOW the firm works, WHAT methods to use, or WHY certain approaches are preferred.
+
+STEP 3: Read the extracts and compare against existing process docs
+Read the extracted content from _scripts/output/extracts/
+Also read ALL existing process docs in knowledge/processes/ (created in Wave 3).
+
+For each extract, ask:
+a) Does this contain process knowledge NOT already in knowledge/processes/?
+   → If yes, draft additions to the relevant process doc (or create a new one if it's a distinct topic)
+b) Does this contain training material that explains things at a higher or deeper level than what Wave 3 captured?
+   → If yes, incorporate the additional depth into the relevant process doc
+c) Does this contain templates or examples that would help a new analyst?
+   → If yes, note the Dropbox path and add a reference in the relevant process doc: "Template available: [Dropbox path]"
+d) Does this contain growth papers or published thought leadership?
+   → If yes, note titles, topics, and key arguments. These may connect to themes (Wave 5-C) and selling angles (bd/selling-playbook.md)
+e) Does this contain brand specs, slide banks, or formatting standards?
+   → If yes, verify deliverable-production.md captures these. Update if not.
+
+STEP 4: Update process docs
+For each process doc that needs enrichment:
+- Add new sections, steps, or decision guides discovered from Public Drive materials
+- Add "Source: [Public Drive file path]" provenance for new content
+- Keep files under 15KB — split if needed
+- If a topic deserves its own process doc (e.g., growth-paper-writing.md, proposal-building.md), create it
+
+STEP 5: Log what was found
+Present a summary to Nick:
+- Total files scanned on Public Drive
+- Files extracted and reviewed
+- Process docs updated (list which ones and what was added)
+- New process docs created (if any)
+- Content that was skipped and why
+- Any gaps still remaining
+
+Wait for Nick's approval before writing any updates.
+
+PROVENANCE: For every addition to a process doc, note the source:
+"Source: Public Drive / 04 Resources / Process Resources / [filename]"
+```
+
 ### Wave 5-A — Digest Active Clients Batch 1 (SEQUENTIAL — first batch)
 
 ```
@@ -2411,7 +2477,7 @@ Write: _docs/monthly-review-[YYYY-MM].md
 | II | 2A-C + QG | 3 + 1 | Patterns, lessons, BD intel, client profiles, cross-refs validated |
 | III | 3A-C + QG | 3 + test | Process docs (quant, qual, survey, deliverables, discovery, PM, project types, close-out) |
 | IV | 4A-B + QG | 2 + test | Dropbox API digestion engine (scan + extract + content hash registry + .dropboxignore) |
-| V | 5A-C + QG | 3 + 1 | Active clients digested, theme hubs built, cross-client synthesis, survey content extraction |
+| V | 5Pre-C + QG | 4 + 1 | Public Drive digested, active clients digested, theme hubs built, cross-client synthesis, survey content extraction |
 | VI | 6A-C + QG | 3 + 1 | Meeting notes + survey pipeline ported, GitHub plugin built, survey pattern library |
 | VII | 7A-B + QG | 2 + test | Daily brief system + curation workflow + health monitoring |
 | VIII | 8A-B | 2 | Comprehensive testing + setup guide |
