@@ -128,7 +128,8 @@ PART IV: DATA PIPELINE (Dropbox API)
   Wave 4-QG               Quality gate: test scan + extract on 1 client
 
 PART V: DIGESTION
-  Wave 5-Pre [1 session]  Scan + digest Public Drive (training, templates, process resources) SEQUENTIAL
+  Wave 5-Pre-A [1 session]  Scan Public Drive structure + build digestion plan               SEQUENTIAL
+  Wave 5-Pre-B [1-2 sessions] Extract + digest Public Drive priority content                SEQUENTIAL (after 5-Pre-A)
   Wave 5-A [1 session]    Digest active clients batch 1 (5 priority)    SEQUENTIAL
   Wave 5-B [1 session]    Digest active clients batch 2                 ──┐
   Wave 5-C [1 session]    Build theme hubs from emerged data            ├─ PARALLEL (after 5-A)
@@ -1566,70 +1567,162 @@ All tests must pass before proceeding to Wave 5.
 
 ## PART V: DIGESTION
 
-### Wave 5-Pre — Scan + Digest Public Drive (SEQUENTIAL — before client digestion)
+### Wave 5-Pre-A — Scan Public Drive + Build Digestion Plan (SEQUENTIAL)
 
 ```
 Read _build/CONTEXT.md for project context.
 ⚠️ WRITE CHECK: Verify your working directory is seurat-brain-v2 (not seurat-brain). All writes go to v2 only.
-Read _build/decisions.md — check for any Wave 4 API discoveries that affect scanning non-client paths.
-COORDINATION: Log Public Drive structure discoveries and any process knowledge gaps found to _build/decisions.md. Wave 5-A needs these.
+Read _build/decisions.md — check for any Wave 4 API discoveries that affect scanning non-client paths. Pay special attention to how the engine handles folder structure — the Public Drive does NOT follow the client folder convention (container folders, numbered projects, Old/ folders). It has its own organizational hierarchy.
+COORDINATION: Log the FULL Public Drive folder structure to _build/decisions.md. Wave 5-Pre-B depends entirely on this map.
 
-YOUR TASK: Scan and digest the firm's Public Drive. This contains training materials, process templates, growth papers, brand specs, and internal resources that provide foundational firm context beyond client work. Wave 3 distilled process knowledge from the old brain's docs, but those docs may not have fully captured everything on the Public Drive. This wave fills those gaps.
+YOUR TASK: Scan the firm's Public Drive via Dropbox API and produce a full structural map. This is SCAN ONLY — do not extract or digest anything yet. The goal is to understand what's there, how big it is, and what's worth digesting so we can plan extraction sessions.
 
-STEP 1: Scan the Public Drive
-python digestion_engine.py scan --root "/Nick Fisher/Seurat Group -- Public Drive"
-(The engine works on any Dropbox path, not just Client Folder.)
+IMPORTANT: The digestion engine (digestion_engine.py) was built for client folder structures — it assumes container folders like "01 Project Work" and project-level organization. The Public Drive has a DIFFERENT structure (numbered resource categories, not client/project hierarchy). You may need to:
+- Add a --mode public-drive flag or similar to disable client-specific assumptions
+- Or modify the scan to work in a generic recursive mode for non-client paths
+- Either way, the scan must recursively list ALL files with full paths, sizes, types, and modification dates
 
-Review the scan output. Identify high-value folders — likely candidates:
-- 04 Resources/ — process resources, templates, training materials
-- Growth Papers/ or similar — published thought leadership
-- Training/ or Onboarding/ — analyst training decks
-- Templates/ — deliverable templates, slide banks
-- Any folder with methodology guides, frameworks, or how-to materials
+STEP 1: Explore the Public Drive top-level structure
+Use the Dropbox API to list the top-level folders under "/Nick Fisher/Seurat Group -- Public Drive"
+(Note: locally this may show as "Seurat Group -- Public Drive (Selective Sync Conflict)" but the API path may differ. Check Wave 4-Pre decisions for namespace routing.)
 
-STEP 2: Extract high-value content
-python digestion_engine.py extract --root "/Nick Fisher/Seurat Group -- Public Drive" --latest-only --limit 50
-(Start with 50 files. Prioritize training decks, methodology guides, and templates over administrative files.)
+List 2-3 levels deep to understand the full folder tree before scanning.
+
+STEP 2: Run or adapt the scan
+If the engine handles non-client paths cleanly:
+  python digestion_engine.py scan --root "/Nick Fisher/Seurat Group -- Public Drive"
+If not, modify the engine to support a generic scan mode, then run it.
+
+STEP 3: Produce the structural report
+Output a COMPLETE folder map showing:
+- Every folder path with: file count, total size, date range (oldest → newest file)
+- File type breakdown per folder (how many .pptx, .docx, .xlsx, .pdf, etc.)
+- Total file count and total size for the entire Public Drive
+- Flag any folders that are clearly administrative/skip-worthy (HR, IT setup, expenses, logos, headshots)
+
+STEP 4: Classify folders into tiers
+
+TIER 1 — HIGH VALUE (digest first):
+Anything that teaches HOW the firm works, WHAT methods to use, or WHY certain approaches are preferred:
+- Training decks and onboarding materials
+- Methodology guides and process documentation
+- Growth papers and published thought leadership
+- Analysis templates and frameworks
+- Campfire/shareout presentations with intellectual content
+
+TIER 2 — MODERATE VALUE (digest if time allows):
+- Slide banks and design templates (structure matters, not every slide)
+- Brand specs and formatting standards
+- Proposal examples and SOW templates
+- Administrative process docs (expense, time tracking — low priority but occasionally useful)
+
+TIER 3 — SKIP:
+- Headshots, logos, photos
+- IT setup guides, software licenses
+- Calendar invites, scheduling docs
+- Duplicate copies of things already in client folders
+- Very old files (pre-2018) unless they're foundational methodology docs
+
+STEP 5: Write the digestion plan
+Write: _build/public-drive-digestion-plan.md
+
+This plan should include:
+- Full folder tree with tier classifications
+- Recommended extraction order (Tier 1 folders first, by estimated value)
+- Estimated session count: how many Wave 5-Pre-B sessions are needed?
+  - Rule of thumb: ~30-50 files per session can be extracted and meaningfully compared against existing knowledge
+  - If Tier 1 has 200 files, that's 4-6 sessions. If it has 50, that's 1-2.
+- For each planned session: which folders it covers, estimated file count, which knowledge/processes/ files it will likely enrich
+- Any engine modifications made (so 5-Pre-B sessions know what commands to use)
+
+STEP 6: Present to Nick
+Show:
+1. Total Public Drive size (files, GB)
+2. Folder tree summary (top 2 levels with file counts)
+3. Tier 1 folder list with file counts and why each is high-value
+4. Recommended number of 5-Pre-B sessions
+5. Any surprises (unexpected content, things that change our understanding of the firm)
+
+Do NOT extract or digest any files. This session is reconnaissance only.
+```
+
+### Wave 5-Pre-B — Extract + Digest Public Drive Content (SEQUENTIAL — run after 5-Pre-A)
+
+```
+Read _build/CONTEXT.md for project context.
+⚠️ WRITE CHECK: Verify your working directory is seurat-brain-v2 (not seurat-brain). All writes go to v2 only.
+Read _build/decisions.md — read ALL entries, especially the Wave 5-Pre-A Public Drive structure discovery.
+Read _build/public-drive-digestion-plan.md — this is your extraction roadmap. Follow the priority order.
+COORDINATION: Log extraction discoveries (process knowledge gaps found, new topics not covered by existing docs, surprises) to _build/decisions.md. If multiple 5-Pre-B sessions are needed, subsequent sessions read these notes.
+
+YOUR TASK: Extract and digest the next batch of high-value Public Drive content. If this is the FIRST 5-Pre-B session, start with Tier 1 highest-priority folders. If this is a CONTINUATION session, check _build/decisions.md for what was already covered and pick up where the last session left off.
+
+STEP 1: Extract content
+python digestion_engine.py extract --root "/Nick Fisher/Seurat Group -- Public Drive" --latest-only --limit 40 [--folder "path/to/priority/folder" if the engine supports folder targeting]
+
+If the engine doesn't support folder-level targeting for non-client paths, extract in priority order from the digestion plan and stop at ~40 files per session.
 
 Skip: HR docs, expense templates, IT setup guides, calendar invites, headshots, logos, administrative files.
 Focus: Anything that teaches someone HOW the firm works, WHAT methods to use, or WHY certain approaches are preferred.
 
-STEP 3: Read the extracts and compare against existing process docs
+STEP 2: Read ALL extracts from this batch
 Read the extracted content from _scripts/output/extracts/
-Also read ALL existing process docs in knowledge/processes/ (created in Wave 3).
 
-For each extract, ask:
-a) Does this contain process knowledge NOT already in knowledge/processes/?
-   → If yes, draft additions to the relevant process doc (or create a new one if it's a distinct topic)
-b) Does this contain training material that explains things at a higher or deeper level than what Wave 3 captured?
-   → If yes, incorporate the additional depth into the relevant process doc
-c) Does this contain templates or examples that would help a new analyst?
-   → If yes, note the Dropbox path and add a reference in the relevant process doc: "Template available: [Dropbox path]"
-d) Does this contain growth papers or published thought leadership?
-   → If yes, note titles, topics, and key arguments. These may connect to themes (Wave 5-C) and selling angles (bd/selling-playbook.md)
-e) Does this contain brand specs, slide banks, or formatting standards?
-   → If yes, verify deliverable-production.md captures these. Update if not.
+STEP 3: Read ALL existing process docs
+Read every file in knowledge/processes/ (created in Wave 3, possibly enriched by prior 5-Pre-B sessions).
+Also read: knowledge/patterns.md, knowledge/lessons.md, bd/selling-playbook.md
 
-STEP 4: Update process docs
-For each process doc that needs enrichment:
-- Add new sections, steps, or decision guides discovered from Public Drive materials
-- Add "Source: [Public Drive file path]" provenance for new content
-- Keep files under 15KB — split if needed
-- If a topic deserves its own process doc (e.g., growth-paper-writing.md, proposal-building.md), create it
+STEP 4: Compare and classify each extract
+For each extracted file, determine:
 
-STEP 5: Log what was found
-Present a summary to Nick:
-- Total files scanned on Public Drive
-- Files extracted and reviewed
-- Process docs updated (list which ones and what was added)
-- New process docs created (if any)
-- Content that was skipped and why
-- Any gaps still remaining
+a) PROCESS KNOWLEDGE — Does this contain process knowledge NOT already in knowledge/processes/?
+   → If yes: draft additions to the relevant process doc, or create a new process doc if it's a distinct topic
+   → Likely new topics: proposal-building, growth-paper-writing, campfire-preparation, new-business-pitching, analyst-onboarding, slide-design-principles, data-visualization
 
-Wait for Nick's approval before writing any updates.
+b) DEEPER COVERAGE — Does this explain something at a higher or deeper level than what Wave 3 captured?
+   → If yes: incorporate the additional depth (specific steps, decision criteria, examples, edge cases)
+   → Wave 3 distilled from the old brain's docs, which were Nick's personal notes. Public Drive training decks may have the firm's "official" version with more rigor.
 
-PROVENANCE: For every addition to a process doc, note the source:
-"Source: Public Drive / 04 Resources / Process Resources / [filename]"
+c) TEMPLATES & EXAMPLES — Does this contain templates or examples useful for a new analyst?
+   → If yes: note the exact Dropbox path and add a reference: "Template available: [Public Drive path]"
+   → Do NOT copy template files into the brain. Just reference where they live.
+
+d) GROWTH PAPERS / THOUGHT LEADERSHIP — Published or polished intellectual property?
+   → If yes: create or update intelligence/growth-papers.md with title, topic, key arguments, date, author if known
+   → Note connections to themes (Wave 5-C) and selling angles (bd/selling-playbook.md)
+
+e) BRAND SPEC / FORMATTING — Slide banks, design standards, visual rules?
+   → If yes: verify knowledge/processes/deliverable-production.md captures this. Update if not.
+   → Slide bank inventories (what slides exist, naming conventions) are valuable reference.
+
+f) TRAINING CONTENT — Structured training for analysts/new hires?
+   → If yes: this is GOLD. Training decks often explain the "why" behind processes better than process docs.
+   → Create knowledge/processes/analyst-training.md if enough training content exists, or fold into relevant process docs.
+
+STEP 5: Draft updates
+For each knowledge file that needs enrichment:
+- Draft the specific additions (show only new content, not entire files)
+- Add "Source: Public Drive / [folder] / [filename]" provenance for every new piece
+- Keep files under 15KB — if a file would exceed this, propose how to split it
+- If a topic deserves its own process doc, draft it with full structure
+
+STEP 6: Present to Nick for approval
+Show:
+1. Files extracted and reviewed (count + list)
+2. Process docs to be updated (which ones, what's being added, from which source)
+3. New process docs proposed (topic, estimated size, source files)
+4. Growth papers found (titles, topics)
+5. Templates referenced (paths added to process docs)
+6. What was skipped and why
+7. Coverage progress: what % of the digestion plan is complete? What remains for the next session?
+
+Wait for Nick's approval before writing ANY updates to knowledge files.
+
+PROVENANCE: For every addition, note the source:
+"Source: Public Drive / [folder path] / [filename]"
+
+If this batch does NOT complete all Tier 1 content from the digestion plan, end with:
+"Tier 1 coverage: [X]% complete. Remaining folders: [list]. Recommend [N] more 5-Pre-B session(s)."
 ```
 
 ### Wave 5-A — Digest Active Clients Batch 1 (SEQUENTIAL — first batch)
@@ -2477,11 +2570,11 @@ Write: _docs/monthly-review-[YYYY-MM].md
 | II | 2A-C + QG | 3 + 1 | Patterns, lessons, BD intel, client profiles, cross-refs validated |
 | III | 3A-C + QG | 3 + test | Process docs (quant, qual, survey, deliverables, discovery, PM, project types, close-out) |
 | IV | 4A-B + QG | 2 + test | Dropbox API digestion engine (scan + extract + content hash registry + .dropboxignore) |
-| V | 5Pre-C + QG | 4 + 1 | Public Drive digested, active clients digested, theme hubs built, cross-client synthesis, survey content extraction |
+| V | 5Pre(A-B) + 5A-C + QG | 5-6 + 1 | Public Drive scanned + digested, active clients digested, theme hubs built, cross-client synthesis, survey content extraction |
 | VI | 6A-C + QG | 3 + 1 | Meeting notes + survey pipeline ported, GitHub plugin built, survey pattern library |
 | VII | 7A-B + QG | 2 + test | Daily brief system + curation workflow + health monitoring |
 | VIII | 8A-B | 2 | Comprehensive testing + setup guide |
-| **Total** | | **~25-28** | **Complete firm-wide knowledge + execution system** |
+| **Total** | | **~27-32** | **Complete firm-wide knowledge + execution system** |
 
 ---
 
