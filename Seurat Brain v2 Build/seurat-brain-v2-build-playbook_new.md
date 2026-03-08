@@ -1,3 +1,4 @@
+[seurat-brain-v2-build-playbook_new.md](https://github.com/user-attachments/files/25826986/seurat-brain-v2-build-playbook_new.md)
 # Seurat Brain v2 — Complete Build Playbook
 
 ## Design Principles
