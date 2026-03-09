@@ -132,9 +132,9 @@ PART V: DIGESTION
   Wave 5-Pre-B [3 sessions]  Extract + digest Project Debriefs (297 files, highest ROI)    SEQUENTIAL (after 5-Pre-A)
   Wave 5-Pre-C [2 sessions]  Extract + digest Process Resources + Training                 PARALLEL with 5-A
   Wave 5-Pre-D [2 sessions]  Extract + digest Growth Papers + Campfires + Case Studies     PARALLEL with 5-B (or later)
-  Wave 5-A [1 session]    Digest active clients batch 1 (5 priority)    SEQUENTIAL
-  Wave 5-B [1 session]    Digest active clients batch 2                 ──┐
-  Wave 5-C [1 session]    Build theme hubs from emerged data            ├─ PARALLEL (after 5-A)
+  Wave 5-A [5 sessions]   Digest priority clients (1 client per session) SEQUENTIAL (first 2), then PARALLEL
+  Wave 5-B [2-3 sessions] Digest remaining active clients (2-3 per session) + cross-client synthesis
+  Wave 5-C [1 session]    Build theme hubs from emerged data            PARALLEL with late 5-B
   Wave 5-QG [1 session]   Cross-client synthesis + theme + survey pattern validation
 
 PART VI: SKILLS & PLUGIN
@@ -1972,32 +1972,34 @@ PROVENANCE: "Source: Public Drive / 03 Knowledge Management / [folder] / [filena
 **Practice Areas (04 Resources / 00 Practice Areas) — NOT scheduled as a wave.**
 1,684 files across 5 practice areas (FLI alone is 710 files, 24.8 GB). This is too large for the pre-digestion phase and will overlap heavily with client folder digestion. Practice area content is best absorbed organically during Wave 5-A/B/C client digestion — when you're already reading deliverables from these practice areas. If specific gaps remain after client digestion, schedule targeted extraction sessions post-Wave 5.
 
-### Wave 5-A — Digest Active Clients Batch 1 (SEQUENTIAL — first batch)
+### Wave 5-A — Digest Priority Clients (1 client per session)
+
+IMPORTANT LESSON: The original 5-A tried to digest 5 rich clients in one session and ran out of context at 107 extract files. Priority clients (Henkel, Merck, Bolton, Pennington, Nielsen-Massey) each have 20-30+ extract files and produce detailed synthesis output. One client per session is the right granularity.
+
+Run 5 sessions. The first 2 are SEQUENTIAL (to establish the synthesis pattern). After that, up to 3 can run PARALLEL.
+
+**Client order:** Henkel → Merck → Bolton → Pennington → Nielsen-Massey
+(Or check _scripts/output/digestion_priority.md for updated priority order.)
+
+**Per-client session prompt (use for each of the 5 sessions — replace [CLIENT] with the client name):**
 
 ```
 Read _build/CONTEXT.md for project context.
 ⚠️ WRITE CHECK: Verify your working directory is seurat-brain-v2 (not seurat-brain). All writes go to v2 only.
-Read _build/decisions.md — IMPORTANT: Wave 4 will have logged API patterns, extraction quirks, and content depth findings. Adapt your synthesis approach based on what was discovered.
-COORDINATION: Log synthesis-level discoveries (unexpected client folder structures, cross-client connections found, pattern candidates that emerged) to _build/decisions.md. Wave 5-B and 5-C need these.
+Read _build/decisions.md — read ALL entries. Check for any prior 5-A session discoveries that affect this client.
+COORDINATION: Log synthesis discoveries (cross-client connections, pattern candidates, surprises) to _build/decisions.md.
 
-Read: _scripts/output/digestion_priority.md
-
-YOUR TASK: Extract content from the 5 priority active clients and synthesize into brain knowledge.
-
-PRIORITY CLIENTS: Henkel, Merck, Bolton, Pennington, Nielsen-Massey
-
-The 5 clients listed here are the CONFIRMED active clients as of build time. If digestion_priority.md shows different or additional active clients (last activity <6 months), add them to this batch or flag for Nick's decision.
-
-For EACH client:
+YOUR TASK: Extract and synthesize content for ONE client: [CLIENT].
 
 STEP 1: Extract content (via Dropbox API — stream-and-delete)
-python digestion_engine.py extract --client "[Name]" --latest-only --limit 30
-(This downloads each file via API, extracts the HIGHEST version of each file group, skips Old/ folders, deletes the temp file. Draft-only files (v0.x) are included but tagged `confidence: draft`. No local sync needed.)
+python digestion_engine.py extract --client "[CLIENT]" --latest-only --limit 50
+(Downloads each file via API, extracts the HIGHEST version of each file group, skips Old/ folders, deletes the temp file. Draft-only files (v0.x) are included but tagged `confidence: draft`.)
 
-STEP 2: Read the extracts
-Read files in: _scripts/output/extracts/[client]/
+STEP 2: Read ALL the extracts
+Read every file in: _scripts/output/extracts/[client]/
+Do NOT use agents to read in parallel — read them yourself sequentially to stay within context limits.
 
-STEP 3: Read the existing client profile (from Wave 2 migration)
+STEP 3: Read the existing client profile
 Read: clients/[client].md
 
 STEP 4: Synthesize
@@ -2111,16 +2113,30 @@ Standard demographic question sets.
 IMPORTANT: This file grows over time as more surveys are digested. Each entry must cite the source survey document. The survey-mapper and test-plan-assembler skills should reference this library when building new surveys — it provides proven question language and structure that Seurat has used successfully.
 ```
 
-### Wave 5-B — Digest Active Clients Batch 2 + Cross-Client Synthesis (after 5-A)
+### Wave 5-B — Digest Remaining Active Clients + Cross-Client Synthesis (after 5-A)
+
+Run 2-3 sessions. Each session handles 2-3 clients (thinner/less active clients can be batched). Check _scripts/output/digestion_priority.md for the next clients after the 5 priority clients. Use --limit 30 per client to keep context manageable.
+
+The LAST 5-B session includes the cross-client synthesis step.
 
 ```
-Follow the same extraction and synthesis process as Wave 5-A, but for the next 5 clients from digestion_priority.md Tier 1 list.
+Read _build/CONTEXT.md for project context.
+⚠️ WRITE CHECK: Verify your working directory is seurat-brain-v2 (not seurat-brain). All writes go to v2 only.
+Read _build/decisions.md — read ALL entries including all Wave 5-A session discoveries.
+COORDINATION: Log synthesis discoveries to _build/decisions.md.
+
+YOUR TASK: Extract and synthesize content for the next 2-3 active clients from digestion_priority.md.
+
+For EACH client, follow the same per-client process as Wave 5-A (extract → read extracts → read profile → synthesize → present). Keep to 2-3 clients per session to avoid context exhaustion.
+
+Do NOT use agents to read extracts — read them yourself sequentially.
+
 Use: python digestion_engine.py extract --client "[Name]" --latest-only --limit 30
 The engine's content_hash tracking means re-running on a client already done is safe — it skips unchanged files.
 
-ADDITIONAL STEP — CROSS-CLIENT SYNTHESIS:
+CROSS-CLIENT SYNTHESIS (last 5-B session only):
 
-After processing this batch, read ALL client profiles updated/created across 5-A and 5-B.
+After processing the final batch, read ALL client profiles updated/created across 5-A and 5-B.
 Also read knowledge/patterns.md and knowledge/lessons.md.
 
 Perform cross-client analysis:
@@ -2817,11 +2833,11 @@ Write: _docs/monthly-review-[YYYY-MM].md
 | II | 2A-C + QG | 3 + 1 | Patterns, lessons, BD intel, client profiles, cross-refs validated |
 | III | 3A-C + QG | 3 + test | Process docs (quant, qual, survey, deliverables, discovery, PM, project types, close-out) |
 | IV | 4A-B + QG | 2 + test | Dropbox API digestion engine (scan + extract + content hash registry + .dropboxignore) |
-| V | 5Pre(A-D) + 5A-C + QG | 10-12 + 1 | Public Drive scanned + digested (debriefs→patterns/lessons, process resources, training, growth papers, campfires), active clients digested, theme hubs built, cross-client synthesis, survey content extraction |
+| V | 5Pre(A-D) + 5A-C + QG | 15-18 + 1 | Public Drive scanned + digested (debriefs→patterns/lessons, process resources, training, growth papers, campfires), active clients digested (1 per session for priority, 2-3 per session for others), theme hubs built, cross-client synthesis, survey content extraction |
 | VI | 6A-C + QG | 3 + 1 | Meeting notes + survey pipeline ported, GitHub plugin built, survey pattern library |
 | VII | 7A-B + QG | 2 + test | Daily brief system + curation workflow + health monitoring |
 | VIII | 8A-B | 2 | Comprehensive testing + setup guide |
-| **Total** | | **~32-38** | **Complete firm-wide knowledge + execution system** |
+| **Total** | | **~37-44** | **Complete firm-wide knowledge + execution system** |
 
 ---
 
