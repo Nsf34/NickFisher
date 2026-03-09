@@ -106,58 +106,288 @@ Public Drive:      C:\Users\NickFisher\Seurat Group Dropbox\Nick Fisher\Seurat G
 ## Execution Map
 
 ```
-PART I: FOUNDATION
-  Wave 1   [1 session]    Architecture + CLAUDE.md + .claude/ config + skeleton     SEQUENTIAL
+PART I: FOUNDATION                                                              ✅ DONE
+  Wave 1   [1 session]    Architecture + CLAUDE.md + .claude/ config + skeleton
   Wave 1-QG               Quality gate: session start test + routing validation
 
-PART II: KNOWLEDGE MIGRATION
+PART II: KNOWLEDGE MIGRATION                                                    ✅ DONE
   Wave 2-A [1 session]    Migrate patterns + lessons                    ──┐
   Wave 2-B [1 session]    Migrate BD / selling intel                    ├─ ALL PARALLEL
   Wave 2-C [1 session]    Migrate client profiles (5 priority active)  ──┘
   Wave 2-QG [1 session]   Quality gate: retrieval accuracy + cross-reference integrity
 
-PART III: PROCESS KNOWLEDGE
+PART III: PROCESS KNOWLEDGE                                                     ✅ DONE
   Wave 3-A [1 session]    Distill research methods (quant/qual/survey)  ──┐
   Wave 3-B [1 session]    Distill deliverables + discovery + inputs     ├─ ALL PARALLEL
   Wave 3-C [1 session]    Distill PM + project types + close-out       ──┘
   Wave 3-QG               Quality gate: "new analyst" scenario test
 
-PART IV: DATA PIPELINE (Dropbox API)
+PART IV: DATA PIPELINE (Dropbox API)                                            ✅ DONE
   Wave 4-A [1 session]    Verify API access + build digestion engine     SEQUENTIAL
   Wave 4-B [1 session]    Content extractor + adaptive depth             (after engine works)
   Wave 4-QG               Quality gate: test scan + extract on 1 client
 
-PART V: DIGESTION
-  Wave 5-Pre-A [1 session]   Scan Public Drive structure + build digestion plan              SEQUENTIAL
-  Wave 5-Pre-B [3 sessions]  Extract + digest Project Debriefs (297 files, highest ROI)    SEQUENTIAL (after 5-Pre-A)
-  Wave 5-Pre-C [2 sessions]  Extract + digest Process Resources + Training                 PARALLEL with 5-A
-  Wave 5-Pre-D [2 sessions]  Extract + digest Growth Papers + Campfires + Case Studies     PARALLEL with 5-B (or later)
-  Wave 5-A [5 sessions]   Digest priority clients (1 client per session) SEQUENTIAL (first 2), then PARALLEL
-  Wave 5-B [2-3 sessions] Digest remaining active clients (2-3 per session) + cross-client synthesis
-  Wave 5-C [1 session]    Build theme hubs from emerged data            PARALLEL with late 5-B
-  Wave 5-QG [1 session]   Cross-client synthesis + theme + survey pattern validation
+PART V: COMPREHENSIVE DIGESTION                                                 🔄 IN PROGRESS
+  ── Public Drive (non-client) ──
+  Wave 5-Pre-A [1 session]   Scan Public Drive structure + build digestion plan        ✅ DONE
+  Wave 5-Pre-B [3 sessions]  Extract + digest Project Debriefs (297 files)             ✅ DONE
+  Wave 5-Pre-C [2 sessions]  Extract + digest Process Resources + Training             ✅ DONE
+  Wave 5-Pre-D [2 sessions]  Extract + digest Growth Papers + Campfires + Case Studies ✅ DONE
+  Wave 5-Pre-E [3 sessions]  Extract + digest Practice Areas (5 areas, 1684 files)     ✅ DONE
 
-PART VI: SKILLS & PLUGIN
+  ── Client Digestion: DEPTH-FIRST, ACTIVE CLIENTS FIRST ──
+  ⚠️ APPROACH CHANGE (2026-03-09): SQLite registry analysis revealed the old batch
+  plan was based on assumptions, not data. P&G has 11 files (not 3000+). Coca-Cola
+  has 0. Johnsonville has 3. Meanwhile GMI (21K), Rich's (13K), Harman (8K) were
+  unlisted. Plan now uses ACTUAL file counts and prioritizes active clients.
+
+  PRINCIPLE: Go deep on each client before moving to the next. Extract EVERYTHING
+  of use (multi-pass, no --limit 30 cap). Meet the completion checklist. Then move on.
+
+  ── Phase 2A: Active Client Exhaustive Digestion ──
+  13 currently active clients. Multi-pass extraction. Completion checklist per client.
+
+  DONE (prior waves):
+    Henkel (1,838 files, 4.2% extracted) .......................... ✅ needs depth pass
+    Bolton (1,331 files, 2.6% extracted) .......................... ✅ needs depth pass
+    Merck (233 files, 12.1% extracted) ............................ ✅ needs depth pass
+    Nielsen-Massey (614 files, 9.0% extracted) .................... ✅ needs depth pass
+    Honest Company (2,319 files, 1.7% extracted) .................. ✅ needs depth pass
+    CA Milk Advisory Board (336 files, 0% extracted) .............. ✅ needs depth pass
+    S&S Activewear (604 files, 0% extracted) ...................... ✅ needs depth pass
+    BellRing Brands (15,258 files, 0.1% extracted) ................ ✅ needs depth pass
+
+  REMAINING ACTIVE (not yet digested — ordered by Dropbox data volume):
+    Agriculture Capital (9,330 files, 4,546 extractable, 0%) ...... ⬜ solo session
+    Koki Holdings (972 files, 859 extractable, 0%) ................ ⬜ batch
+    Parmigiano Reggiano (877 files, 724 extractable, 0%) .......... ⬜ batch
+    Sakura (750 files, 663 extractable, 0%) ....................... ⬜ batch
+    Nestle Purina (within Nestle: 6,159 files total, 0%) .......... ⬜ solo session
+
+  DEPTH PASSES (previously profiled but <15% extraction coverage):
+    BellRing (15,258 files, 0.1%) ................................. ⬜ multi-session deep
+    Honest Company (2,319 files, 1.7%) ............................ ⬜ depth pass
+    Henkel (1,838 files, 4.2%) .................................... ⬜ depth pass
+    Bolton (1,331 files, 2.6%) .................................... ⬜ depth pass
+
+  ── Phase 2B: Recently Completed Clients — Data-Rich (from Batch 1 + 2) ──
+  Already extracted at --limit 30. Need depth passes to completion.
+    Pepsi (20,486 files) .......................................... ✅ initial, ⬜ depth
+    Campbell's (9,178 files) ...................................... 🔄 Batch 2
+    3M (8,858 files) .............................................. ✅ initial, ⬜ depth
+    Hershey (7,972 files) ......................................... 🔄 Batch 2
+    Church & Dwight (7,434 files) ................................. 🔄 Batch 2
+    Clorox (7,331 files) .......................................... ✅ initial, ⬜ depth
+    Constellation (6,114 files) ................................... 🔄 Batch 2
+    Ocean Spray (3,582 files) ..................................... ✅ initial, ⬜ depth
+    Kraft (2,654 files) ........................................... 🔄 Batch 2
+    Mars (1,071 files) ............................................ 🔄 Batch 2
+    Tropicana (360 files) ......................................... 🔄 Batch 2
+    Gallo (398 files) ............................................. 🔄 Batch 2
+    Elida Beauty (388 files) ...................................... 🔄 Batch 2
+
+  ── Phase 3: Recent Clients — Data-Rich (1000+ files, not yet touched) ──
+  Ordered by file count. Same depth-first approach.
+    Tillamook (6,913 files, 9 proj) ............................... ⬜
+    Unilever (6,772 files, 6 proj, active through 2025) ........... ⬜
+    Yerba Madre (4,905 files, 6 proj) ............................. ⬜
+    Wellness Pet Co (3,233 files, 9 proj) ......................... ⬜
+    Banza (2,976 files, 6 proj) ................................... ⬜
+    Harmless Harvest (2,572 files, 4 proj) ........................ ⬜
+    Mondelez (1,889 files, 3 proj) ................................ ⬜
+    Unreal Snacks (1,583 files, 4 proj) ........................... ⬜
+    Nature Fresh Farms (1,531 files, 2 proj) ...................... ⬜
+    Melissa and Doug (1,486 files, 2 proj) ........................ ⬜
+    ByHeart (1,316 files, 12 proj) ................................ ⬜
+    Daiya (1,049 files, 2 proj) ................................... ⬜
+    Hilton (1,041 files, 2 proj) .................................. ⬜
+    Clif Bar (983 files, 4 proj) .................................. ⬜
+    Koki Holdings (972 files, 5 proj) ............................. ⬜
+    Perrigo (930 files, 2 proj) ................................... ⬜
+
+  ── Phase 4: Lapsed Data-Rich Clients (3000+ files, historical value) ──
+  These are NOT the phantom "big names" from the old plan. These are clients
+  that ACTUALLY have massive Dropbox archives.
+    GMI (21,775 files, 8 proj) .................................... ⬜ solo
+    Rich's (13,351 files, 28 proj) ................................ ⬜ solo
+    Harman (8,127 files, 51 proj) ................................. ⬜ solo
+    Sabra (7,969 files, 5 proj) ................................... ⬜ solo
+    Arbor (7,528 files, 2 proj) ................................... ⬜ solo
+    Boehringer Animal Health (7,354 files, 42 proj) ............... ⬜ solo
+    Post (6,399 files, 3 proj) .................................... ⬜ solo
+    Nestle (6,159 files, 33 proj) ................................. ⬜ solo
+    Dean Foods (4,329 files, 6 proj) .............................. ⬜
+    Lamb Weston (4,286 files, 9 proj) ............................. ⬜
+    Wakefern (3,782 files, 4 proj) ................................ ⬜
+    Diamond Foods (3,381 files, 10 proj) .......................... ⬜
+    Elmers (3,305 files, 46 proj) ................................. ⬜
+    Interbake Foods (3,237 files, 4 proj) ......................... ⬜
+    Hain (3,172 files, 7 proj) .................................... ⬜
+    LEGO (3,149 files, 10 proj) ................................... ⬜
+    Glanbia (3,114 files, 7 proj) ................................. ⬜
+
+  ── Phase 5: BD/Tiny Classification (2 sessions) ──
+  ~380 folders with <100 files. Includes the "big names" that turned out to be
+  phantom: P&G (11 files), Coca-Cola (0), J&J (4), GSK (20), Heineken (32),
+  Newell (26), Bissell (7), Hormel (8), Diageo (6), Stonyfield (2), Godiva (1).
+  Batch 7  [2 sessions]   Bulk classify A-L and M-Z
+
+  ── Quality Gates ──
+  After Phase 2A:  Cross-client synthesis + numbering reconciliation
+  After Phase 3:   Comprehensive quality gate (50+ deeply profiled clients)
+  After Phase 4:   Final synthesis + theme hub refresh
+  5-FIX    [1 session]    Split oversized files (qual/quant/survey >15KB)
+
+  TOTAL PART V: ~35-40 sessions (down from 50 — phantom clients eliminated)
+  See: _build/expanded-digestion-plan.md for full data-driven breakdown
+
+─── POST-DIGESTION DECISION POINT ─────────────────────────────────────────────
+
+  After Part V completes, the brain has ~100+ deeply profiled clients, 120+ patterns,
+  120+ lessons, 17+ project-type docs, 15+ theme hubs, and a comprehensive survey
+  pattern library. It is usable as a knowledge system through Claude Code / Cowork.
+
+  Nick decides which to prioritize next:
+
+  OPTION A: Daily Brief (1-2 sessions) — start accumulating market intelligence NOW
+  OPTION B: Skills & Plugin (4 sessions) — make the brain a team tool, not just Nick's
+  OPTION C: Continue digestion depth (ad hoc) — deeper digs on specific clients
+
+  Recommended order: A → B → testing → deployment
+
+────────────────────────────────────────────────────────────────────────────────
+
+PART VI: SKILLS & PLUGIN                                                        ⬜ DEFERRED
   Wave 6-A [1 session]    Port meeting notes skill                      ──┐
   Wave 6-B [1 session]    Port survey pipeline (4 skills)               ├─ ALL PARALLEL
   Wave 6-C [1 session]    Build GitHub plugin structure + commands      ──┘
   Wave 6-QG [1 session]   End-to-end skill testing (real inputs → real outputs)
+  ENTRY CONDITION: Part V quality gate passed. Brain is stable enough for skills to
+  reference client profiles, patterns, and survey-patterns reliably.
 
-PART VII: AUTOMATION & INTELLIGENCE
+PART VII: AUTOMATION & INTELLIGENCE                                             ⬜ DEFERRED
   Wave 7-A [1 session]    Daily brief system + source config            ──┐
   Wave 7-B [1 session]    Freshness monitoring + curation process       ├─ PARALLEL
   Wave 7-QG               Quality gate: daily brief + curation + health check validation
+  ENTRY CONDITION: Can run in parallel with Part VI or even during late Part V digestion.
+  Daily brief (7-A) is independent of skills — can be ported any time after Part IV.
+  Nick specifically noted daily brief is worth considering during digestion phase.
 
-PART VIII: TESTING & DEPLOYMENT
+PART VIII: TESTING & DEPLOYMENT                                                 ⬜ DEFERRED
   Wave 8-A [1 session]    Comprehensive scenario testing (all user types)
   Wave 8-B [1 session]    Setup guide + training materials + GitHub push
   Wave 8   [human work]   Pilot with 2-3 users → iterate → rollout
+  ENTRY CONDITION: Parts VI and VII complete. All skills tested. Setup guide written.
 
 ONGOING                   Digestion waves, weekly curation, project close-outs
 
-TOTAL: ~25-28 sessions + quality gates + ongoing
-MAX PARALLELISM: 3 simultaneous (Waves 2, 3, 6)
+TOTAL: ~55-65 sessions (Parts I-VIII) + ongoing operations
+MAX PARALLELISM: 6 simultaneous (Part V digestion batches)
 ```
+
+---
+
+## Build Progress (as of 2026-03-09)
+
+### Brain State
+
+| Component | Count | Notes |
+|-----------|-------|-------|
+| Client profiles | 170 files | ~14 deeply digested, rest skeletal or minimal |
+| Patterns | 103 (P1–P103) | Strong coverage — debriefs + clients + practice areas |
+| Lessons | 104 (L1–L104) | Strong coverage, sequentially ordered |
+| Process docs | 13 | Solid — all major methods covered |
+| Project-type files | 17+ | Enriched from Practice Areas (Growth Strategy, FLI, Marketing, Omnichannel, Total Capabilities) |
+| Theme hubs | 12 | Built from client profiles — strengthening with each client batch |
+| Survey archetypes | 8 | + 8 quota design patterns, growing with each client |
+| BD selling areas | 10 | Playbook + deck case study catalog |
+| Content registry | 323,313 files | SQLite DB, all clients + Public Drive scanned |
+
+### Completed Sessions (chronological)
+
+| Session | Wave | What Was Done |
+|---------|------|---------------|
+| 1 | 1 | Foundation — architecture, CLAUDE.md, skeleton |
+| 2 | 1-QG | Quality gate passed |
+| 3 | 2-A | Migrate patterns (67) + lessons (79) |
+| 4 | 2-B | Migrate BD / selling intel |
+| 5 | 2-C | Migrate client profiles + build _index.md (160 clients) |
+| 6 | 2-QG | Quality gate passed |
+| 7 | 3-A | Research methods (quant, qual, survey) |
+| 8 | 3-B | Deliverables, discovery, inputs |
+| 9 | 3-C | PM, project types, close-out |
+| 10 | 4-A | Dropbox API access + digestion engine |
+| 11 | 4-B | Content extractor + adaptive depth |
+| 12 | 5-Pre-A | Public Drive scan (7,357 files mapped) |
+| 13 | 5-Pre-B | Project Debriefs (297 files → patterns, lessons, client intel) |
+| 14 | 5-Pre-C | Process Resources (234 files) + Training Materials (327 files) |
+| 15 | 5-Pre-D | Growth Papers (68 entries cataloged) + Campfires (189 files, 20 case studies) |
+| 16 | 5-A | Priority active clients: Henkel, Merck, Bolton, Pennington, Nielsen-Massey |
+| 17 | 5-B | BellRing Brands (42 files, 12 projects, richest profile) |
+| 18 | 5-B | Honest Company, CA Milk, S&S Activewear |
+| 19 | 5-C | Theme hubs (11 themes built) |
+| 20 | 5-Pre-E | Practice Areas: Growth Strategy + Total Capabilities |
+| 21 | 5-Pre-E | Practice Areas: FLI (Forward-Looking Insight) |
+| 22 | 5-Pre-E | Practice Areas: Marketing Strategy + Omnichannel |
+| 23 | Batch 1 | Client: Pepsi (4 projects, 280+ line profile) |
+| 24 | Batch 1 | Client: Clorox (15+ projects across 6 BUs, 240+ line profile) |
+| 25 | Batch 1 | Client: 3M + Ocean Spray (6 Ocean Spray projects, 175+ lines) |
+| 26-31 | Batch 2 | Hershey, Mars, Kraft, Campbell's, beverage cluster, personal care cluster — RUNNING |
+
+### Deeply Profiled Clients (as of Batch 1 completion)
+
+| Client | Lines | Projects | Source Wave |
+|--------|-------|----------|------------|
+| BellRing Brands | 256+ | 12+ | 5-B |
+| Pepsi | 280+ | 4 | Batch 1 |
+| Clorox | 240+ | 15+ | Batch 1 |
+| Henkel | 200+ | 2 major | 5-A |
+| Ocean Spray | 175+ | 6 | Batch 1 |
+| Bolton Group | ~150 | 2 | 5-A |
+| Merck | ~150 | 1 | 5-A |
+| Nielsen-Massey | ~140 | 2 | 5-A |
+| Pennington | ~120 | 3 | 5-A |
+| Honest Company | ~100 | — | 5-B |
+| CA Milk Advisory Board | ~80 | — | 5-B |
+| S&S Activewear | ~80 | — | 5-B |
+| 3M | ~TBD | — | Batch 1 |
+
+### Extraction Coverage Reality Check (2026-03-09)
+
+Even "completed" clients have barely been touched. The `--limit 30` approach gave surface-level profiles:
+
+| Client | Extractable Files | Actually Extracted | Coverage |
+|---|---|---|---|
+| BellRing Brands | 7,137 | 8 | 0.1% |
+| Honest Company | 1,789 | 30 | 1.7% |
+| Bolton | 1,108 | 29 | 2.6% |
+| Henkel | 1,635 | 68 | 4.2% |
+| Nielsen-Massey | 289 | 26 | 9.0% |
+| Merck | 231 | 28 | 12.1% |
+| Agriculture Capital | 4,546 | 0 | 0% |
+| Koki Holdings | 859 | 0 | 0% |
+| Parmigiano Reggiano | 724 | 0 | 0% |
+| Sakura | 663 | 0 | 0% |
+
+**All 93 extract directories on disk have 0 files** — extracts were consumed and deleted.
+Total DB status: 970 extracted / 257,533 pending = **0.4% overall extraction coverage.**
+
+### Phantom Clients Eliminated (2026-03-09)
+
+SQLite registry query revealed that many planned "Lapsed Tier 1" clients have almost no files:
+- P&G: 11 files | Coca-Cola: 0 | J&J: 4 | GSK: 20 | Heineken: 32 | Newell: 26
+- Bissell: 7 | Method: 9 | Johnsonville: 3 | Stonyfield: 2 | Godiva: 1 | Hormel: 8
+These have been moved to Phase 5 (BD/Tiny classification). Phase 4 is now rebuilt around
+clients that ACTUALLY have massive Dropbox archives (GMI 21K, Rich's 13K, Harman 8K, etc.).
+
+### Known Issues to Resolve
+
+1. **Oversized process docs:** qual-research.md (28.9KB), quant-research.md (25.9KB), survey-fieldwork.md (23.8KB) all exceed 15KB limit. Need splitting.
+2. **selling-playbook.md growth:** Now at 10 selling areas from multiple sessions adding content. May need restructuring.
+3. **decisions.md growth:** 600+ lines and growing. Consider archiving completed session entries.
+4. **Client profile filename cleanup:** Some theme references in profiles don't match v2 theme hub filenames.
+5. **P85-P94 gap:** FLI session renumbered to P95-P98, leaving implicit gap. No actual gap in file — all sequential P1-P103 — but provenance trail references original proposed numbers in decisions.md.
+6. **Extraction coverage:** Even "deeply profiled" clients are at 0.1-12% extraction. Need multi-pass depth approach.
 
 ---
 
@@ -2113,75 +2343,313 @@ Standard demographic question sets.
 IMPORTANT: This file grows over time as more surveys are digested. Each entry must cite the source survey document. The survey-mapper and test-plan-assembler skills should reference this library when building new surveys — it provides proven question language and structure that Seurat has used successfully.
 ```
 
-### Wave 5-B — Digest Remaining Active Clients + Cross-Client Synthesis (after 5-A)
+### Wave 5-B+ — Client Digestion (Depth-First Protocol)
 
-Run 2-3 sessions. Each session handles 2-3 clients (thinner/less active clients can be batched). Check _scripts/output/digestion_priority.md for the next clients after the 5 priority clients. Use --limit 30 per client to keep context manageable.
+**⚠️ REVISED 2026-03-09 — replaces the old batch-and-move-on approach.**
 
-The LAST 5-B session includes the cross-client synthesis step.
+This section was rewritten after SQLite registry analysis revealed that:
+1. Many planned "Tier 1" clients had <50 files (P&G: 11, Coca-Cola: 0, J&J: 4)
+2. Even "completed" clients were at 0.1-12% extraction coverage
+3. The `--limit 30` cap meant 30 files out of thousands — barely a sample
+
+**New approach: DEPTH-FIRST. Extract everything. Complete each client before moving on.**
+
+---
+
+#### Client Digestion Protocol
+
+**Step 1: Pick the next client** from the priority list (active clients first, then recent, then lapsed — ordered by data volume within each tier).
+
+**Step 2: Multi-pass extraction** (run passes sequentially for each client):
+
+| Pass | Command | What It Captures | When to Use |
+|------|---------|-----------------|-------------|
+| Pass 1 | `extract --client "X" --finals-only` | All v1.0+ deliverables — the actual client-facing work | ALWAYS — this is the core |
+| Pass 2 | `extract --client "X" --latest-only` | Remaining highest-version files (internal docs, selling materials, inputs, drafts) | ALWAYS — captures internal knowledge |
+| Pass 3 | `extract --client "X" --latest-only --include-old` | Old/ folder files if evolution analysis is valuable | OPTIONAL — only for clients where version evolution matters |
+
+**No `--limit` flag.** The engine already filters out superseded versions, conflicted copies, and Old/ (by default). Let it extract everything that passes those filters.
+
+**SQLite lock rule still applies:** Only ONE session runs `extract` at a time. But you can run multiple passes for the same client in one session.
+
+**Step 3: Read and synthesize** — same as before, but now you're reading potentially hundreds of extracts instead of 30. For large clients (5000+ extractable files), split synthesis across multiple sessions:
+- Session 1: Extract Pass 1 (finals) → synthesize deliverable history
+- Session 2: Extract Pass 2 (latest) → enrich with internal docs, inputs, selling materials
+- Session 3 (if needed): Deep-dive on specific projects, evolution analysis
+
+**Step 4: Completion checklist** — a client is DONE when ALL of these are true:
+
+- [ ] All v1.0+ deliverables extracted and synthesized
+- [ ] Every project represented in the profile (not just the most recent 2-3)
+- [ ] Stakeholder map complete (who we worked with, who made decisions)
+- [ ] Methods documented per project (quant, qual, discovery — what was done)
+- [ ] Key findings captured with specifics (not summaries of summaries)
+- [ ] Patterns identified and added to patterns.md with provenance
+- [ ] Lessons captured if applicable
+- [ ] BD signals noted (re-sell opportunities, adjacent needs, timing)
+- [ ] Theme connections established
+- [ ] "Could someone pick up this client tomorrow and be fully briefed?" = YES
+
+**Step 5: Log and move on** — update `_build/decisions.md` with what was done, extraction coverage stats, and any flags for future work.
+
+---
+
+#### Rules for ALL Digestion Sessions
+
+1. **Read first:** `_build/decisions.md` (last 50 lines), `knowledge/patterns.md` (current P## count), `knowledge/lessons.md` (current L## count) BEFORE doing any work.
+2. **SQLite lock:** Only ONE session runs `digestion_engine.py extract` at a time. Synthesis (reading extracts + writing .md files) is safe in parallel.
+3. **No artificial limits:** Do NOT use `--limit 30`. Extract all eligible files per pass.
+4. **Log everything:** Append to `_build/decisions.md` at end of session.
+5. **Cross-reference everything:** client profiles → patterns, patterns → clients, themes → both.
+6. **Completion bar:** Meet ALL checklist items before marking a client as done.
+
+---
+
+#### Priority List (data-grounded, from SQLite content registry)
+
+**TIER A — Active Clients (13 total, these are generating revenue NOW)**
+
+| Priority | Client | Files | Extractable | Projects | Current Coverage | Session Type |
+|----------|--------|-------|-------------|----------|-----------------|--------------|
+| A1 | BellRing Brands | 15,258 | 7,137 | 20 | 0.1% | multi-session deep |
+| A2 | Agriculture Capital | 9,330 | 4,546 | 1 | 0% | solo |
+| A3 | Honest Company | 2,319 | 1,789 | 3 | 1.7% | depth pass |
+| A4 | Henkel | 1,838 | 1,635 | 2 | 4.2% | depth pass |
+| A5 | Bolton Group | 1,331 | 1,108 | 2 | 2.6% | depth pass |
+| A6 | Koki Holdings | 972 | 859 | 5 | 0% | solo |
+| A7 | Parmigiano Reggiano | 877 | 724 | 2 | 0% | solo or batch |
+| A8 | Sakura | 750 | 663 | 4 | 0% | solo or batch |
+| A9 | CA Milk Advisory Board | 336 | 246 | 1 | 0% | depth pass |
+| A10 | Nestle Purina | (within Nestle 6,159) | ~4,728 | 33 | 0% | solo |
+| A11 | Nielsen-Massey | 614 | 289 | 2 | 9.0% | depth pass |
+| A12 | Merck | 233 | 231 | 2 | 12.1% | depth pass |
+| A13 | S&S Activewear | 604 | 564 | 2 | 0% | depth pass |
+
+**TIER B — Recent Clients with 1000+ Files (highest re-sell value)**
+
+| Priority | Client | Files | Extractable | Projects | Session Type |
+|----------|--------|-------|-------------|----------|--------------|
+| B1 | Pepsi | 20,486 | 17,173 | 32 | depth pass (initial done) |
+| B2 | Campbell's | 9,178 | 5,365 | 22 | Batch 2 then depth |
+| B3 | 3M | 8,858 | 6,984 | 28 | depth pass (initial done) |
+| B4 | Hershey | 7,972 | 3,778 | 3 | Batch 2 then depth |
+| B5 | Church & Dwight | 7,434 | 2,285 | 3 | Batch 2 then depth |
+| B6 | Clorox | 7,331 | 5,242 | 75 | depth pass (initial done) |
+| B7 | Tillamook | 6,913 | 3,436 | 9 | solo |
+| B8 | Unilever | 6,772 | 5,732 | 6 | solo |
+| B9 | Constellation | 6,114 | 4,547 | 11 | Batch 2 then depth |
+| B10 | Yerba Madre | 4,905 | 2,772 | 6 | solo |
+| B11 | Wellness Pet Co | 3,233 | 1,790 | 9 | solo |
+| B12 | Banza | 2,976 | 2,625 | 6 | solo |
+| B13 | Harmless Harvest | 2,572 | 1,211 | 4 | solo |
+| B14 | Mondelez | 1,889 | 1,272 | 3 | solo |
+| B15 | Unreal Snacks | 1,583 | 1,407 | 4 | solo |
+| B16 | Nature Fresh Farms | 1,531 | 1,432 | 2 | solo |
+| B17 | ByHeart | 1,316 | 1,077 | 12 | solo |
+| B18 | Daiya | 1,049 | 931 | 2 | batch |
+| B19 | Clif Bar | 983 | 896 | 4 | batch |
+| B20 | Perrigo | 930 | 854 | 2 | batch |
+
+**TIER C — Lapsed Clients with 3000+ Files (historical/methodology value)**
+
+| Priority | Client | Files | Projects | Notes |
+|----------|--------|-------|----------|-------|
+| C1 | GMI | 21,775 | 8 | Massive — unknown to plan |
+| C2 | Rich's | 13,351 | 28 | Active through 2021, 28 projects |
+| C3 | Harman | 8,127 | 51 | 51 projects — extraordinary depth |
+| C4 | Sabra | 7,969 | 5 | Large engagement history |
+| C5 | Arbor | 7,528 | 2 | Active through 2021 |
+| C6 | Boehringer AH | 7,354 | 42 | 42 projects — methodology gold |
+| C7 | Post | 6,399 | 3 | Large CPG lapsed |
+| C8 | Nestle | 6,159 | 33 | (overlaps with Nestle Purina) |
+| C9 | Lamb Weston | 4,286 | 9 | Foodservice/QSR |
+| C10 | Wakefern | 3,782 | 4 | Retail |
+| C11 | Elmers | 3,305 | 46 | 46 projects! |
+| C12 | LEGO | 3,149 | 10 | Non-CPG, rich |
+| C13 | Hain | 3,172 | 7 | Natural/organic |
+
+**TIER D — BD/Tiny (~380 folders with <100 files)**
+Includes the phantom "big names": P&G (11), Coca-Cola (0), J&J (4), GSK (20),
+Heineken (32), Newell (26), Bissell (7), Method (9), Hormel (8), Diageo (6),
+Johnsonville (3), Stonyfield (2), Godiva (1), Ghirardelli (4), Energizer (45),
+Land O Lakes (48), Pernod Ricard (22), Kimberly Clark (67), Red Bull (4).
+Quick classify → BD/selling note or skip. 2 sessions total.
+
+---
+
+#### Template: Client Deep Digestion (Primary Template)
+
+Use this template for every client, whether solo or in a batch. Fill in [CLIENT NAME].
 
 ```
 Read _build/CONTEXT.md for project context.
 ⚠️ WRITE CHECK: Verify your working directory is seurat-brain-v2 (not seurat-brain). All writes go to v2 only.
-Read _build/decisions.md — read ALL entries including all Wave 5-A session discoveries.
-COORDINATION: Log synthesis discoveries to _build/decisions.md.
+Read _build/decisions.md — last 50 lines for current state.
+Read knowledge/patterns.md — note current P## count. DO NOT use any P## that already exists. Start from the NEXT available number.
+Read knowledge/lessons.md — note current L## count. DO NOT use any L## that already exists. Start from the NEXT available number.
 
-YOUR TASK: Extract and synthesize content for the next 2-3 active clients from digestion_priority.md.
+YOUR TASK: Exhaustive digestion of [CLIENT NAME]. Extract EVERYTHING of use.
 
-For EACH client, follow the same per-client process as Wave 5-A (extract → read extracts → read profile → synthesize → present). Keep to 2-3 clients per session to avoid context exhaustion.
+═══ PHASE 1: EXTRACT ALL FINALS ═══
+cd "C:\Users\NickFisher\Dropbox (Personal)\Nick's Personal Dropbox (Nickfisher518@gmail.com)\seurat-brain-v2\_scripts"
+python digestion_engine.py extract --client "[CLIENT NAME]" --finals-only
 
-Do NOT use agents to read extracts — read them yourself sequentially.
+This extracts ALL v1.0+ deliverables — the actual client-facing work product.
+Report: how many files extracted, word counts, content depth distribution.
 
-Use: python digestion_engine.py extract --client "[Name]" --latest-only --limit 30
-The engine's content_hash tracking means re-running on a client already done is safe — it skips unchanged files.
+═══ PHASE 2: READ + SYNTHESIZE FINALS ═══
+Read ALL extract files in _scripts/output/extracts/[client]/.
+Read clients/[client-name].md (existing profile, if any).
 
-CROSS-CLIENT SYNTHESIS (last 5-B session only):
+For EVERY project found in the extracts:
+- Project name, number, dates, scope, strategic question
+- Methods used (quant, qual, discovery, etc.)
+- Key findings — SPECIFIC insights, not summaries of summaries
+- Deliverable type and content (what was the WS1 about? WS2? Final?)
+- Client stakeholders and Seurat team (from contributor initials + doc properties)
+- What made this engagement distinctive vs. standard projects of this type?
 
-After processing the final batch, read ALL client profiles updated/created across 5-A and 5-B.
-Also read knowledge/patterns.md and knowledge/lessons.md.
+═══ PHASE 3: EXTRACT REMAINING FILES ═══
+python digestion_engine.py extract --client "[CLIENT NAME]" --latest-only
+
+This gets highest-version of everything else: internal docs, selling materials,
+inputs, discovery, fieldwork specs, draft-only files. Do NOT use --limit.
+
+═══ PHASE 4: ENRICH WITH INTERNAL DOCS ═══
+Read the new extracts. These often reveal:
+- Selling approach (how we won the business — BD intelligence)
+- Input review findings (what the client shared, what we learned from their data)
+- Internal discussions (comments, meeting notes, email summaries)
+- Discovery insights (competitive landscape, consumer research)
+- Survey instruments and fieldwork details
+
+═══ PHASE 5: WRITE ═══
+ENRICH clients/[client-name].md — full project-level detail for EVERY project.
+  Structure: Company → Relationship → Projects (each with scope, methods, findings,
+  outcome, team) → Stakeholders → Strategic Context → What We've Learned → Themes
+ADD new patterns to knowledge/patterns.md (NEXT AVAILABLE P##)
+ADD new lessons to knowledge/lessons.md (NEXT AVAILABLE L##)
+ADD survey patterns if survey content found
+UPDATE intelligence/themes/*.md with evidence where relevant
+ADD BD signals to bd/selling-playbook.md
+LOG session to _build/decisions.md including extraction stats
+
+═══ PHASE 6: COMPLETION CHECK ═══
+Before marking this client as done, verify:
+- [ ] All v1.0+ deliverables extracted and synthesized
+- [ ] Every project represented in profile
+- [ ] Stakeholder map complete
+- [ ] Methods documented per project
+- [ ] Key findings are specific and actionable
+- [ ] Patterns/lessons captured with provenance
+- [ ] BD signals noted
+- [ ] Theme connections established
+- [ ] "Could someone pick up this client tomorrow?" = YES
+
+Report: extraction coverage (X of Y extractable files done), projects found,
+patterns added, lessons added, any gaps or flags.
+```
+
+#### Template: Client Depth Pass (for previously profiled clients)
+
+Use when a client already has a profile from a `--limit 30` session but needs exhaustive extraction.
+
+```
+Read _build/CONTEXT.md for project context.
+⚠️ WRITE CHECK: Verify your working directory is seurat-brain-v2 (not seurat-brain). All writes go to v2 only.
+Read _build/decisions.md — last 50 lines for current state.
+Read knowledge/patterns.md — note current P## count.
+Read knowledge/lessons.md — note current L## count.
+
+YOUR TASK: Depth pass on [CLIENT NAME]. This client was previously profiled with
+--limit 30 extraction (~[X]% coverage). Extract everything remaining.
+
+STEP 1 — Check current state:
+cd "C:\Users\NickFisher\Dropbox (Personal)\Nick's Personal Dropbox (Nickfisher518@gmail.com)\seurat-brain-v2\_scripts"
+python digestion_engine.py status --client "[CLIENT NAME]"
+Read clients/[client-name].md (current profile).
+
+STEP 2 — Extract all remaining finals:
+python digestion_engine.py extract --client "[CLIENT NAME]" --finals-only
+
+STEP 3 — Extract all remaining latest versions:
+python digestion_engine.py extract --client "[CLIENT NAME]" --latest-only
+
+STEP 4 — Read ALL new extracts and compare against existing profile:
+- Which projects are missing from the profile?
+- Which projects have richer detail now?
+- What internal docs reveal that deliverables didn't?
+
+STEP 5 — Enrich profile + add patterns/lessons/BD signals.
+Use the same write targets and completion checklist as the primary template.
+
+Report: old coverage → new coverage, projects added/enriched, new patterns/lessons.
+```
+
+#### Template: BD/Tiny Bulk Classification (Phase 5)
+
+```
+Read _build/CONTEXT.md for project context.
+⚠️ WRITE CHECK: Verify your working directory is seurat-brain-v2 (not seurat-brain). All writes go to v2 only.
+Read _build/decisions.md — last 50 lines.
+
+YOUR TASK: Bulk classify ~190 Dropbox client folders ([A-L] or [M-Z]) with <100 files each.
+
+For each folder, query the content registry:
+cd "C:\Users\NickFisher\Dropbox (Personal)\Nick's Personal Dropbox (Nickfisher518@gmail.com)\seurat-brain-v2\_scripts"
+python -c "import sqlite3; c=sqlite3.connect('output/content_registry.db'); r=c.execute('SELECT COUNT(*), COUNT(DISTINCT project) FROM files WHERE client=?',('[Folder Name]',)).fetchone(); print(f'Files: {r[0]}, Projects: {r[1]}')"
+
+Classify each as:
+- "REAL ENGAGEMENT" (has project folders, deliverables) → Extract --limit 10, create minimal profile
+- "BD ATTEMPT" (selling materials, proposals, no project work) → Note in bd/selling-playbook.md
+- "SKIP" (empty, test, or irrelevant) → No action
+
+Output: Update clients/_index.md with classification for each folder.
+Log: _build/decisions.md with counts per classification.
+```
+
+#### Template: Cross-Client Synthesis (run after completing a tier)
+
+```
+Read _build/CONTEXT.md for project context.
+⚠️ WRITE CHECK: Verify your working directory is seurat-brain-v2 (not seurat-brain). All writes go to v2 only.
+Read _build/decisions.md — ALL entries from recent digestion sessions.
+
+YOUR TASK: Cross-client synthesis across all recently digested clients.
+
+Read ALL client profiles in clients/ (every .md file).
+Read knowledge/patterns.md (full file).
+Read knowledge/lessons.md (full file).
+Read knowledge/survey-patterns.md.
+Read all intelligence/themes/*.md files.
+Read bd/selling-playbook.md.
 
 Perform cross-client analysis:
-1. Which patterns now have 3+ client evidence points? (these are strong — upgrade confidence level)
-2. Are there NEW patterns visible only when looking across multiple recently-digested clients?
-3. Are there thematic clusters forming that don't yet have theme hub files?
-4. Are there common methods or approaches across clients that should strengthen process docs?
+1. Which patterns now have 5+ client evidence points? Upgrade confidence to "strong."
+2. Are there NEW patterns visible only when looking across multiple clients?
+3. Are there thematic clusters forming that don't yet have theme hub files? Create new hubs.
+4. Are there common methods across clients that should strengthen process docs?
 5. Are there BD signals that suggest new selling areas or re-sell patterns?
-6. SURVEY PATTERNS: Read knowledge/survey-patterns.md. Cross-reference survey content found across clients:
-   - Which question batteries appear in 2+ clients? (elevate to standard patterns)
-   - Which scales are used consistently? (standardize coding)
-   - Do survey flows differ by category in predictable ways? (build flow templates)
-   - Are there category-specific demographic questions? (build demographic blocks)
-   This cross-client view is where the survey pattern library gets powerful — patterns across surveys reveal Seurat's actual methodology.
+6. SURVEY PATTERNS: Cross-reference survey content found across clients.
+7. NUMBERING CHECK: Verify patterns.md has sequential P1-P[N], no gaps/duplicates.
+   Verify lessons.md has sequential L1-L[N], no gaps/duplicates. Fix any issues.
+8. FILE SIZE CHECK: Flag any knowledge file exceeding 15KB. Propose split if found.
 
-Present cross-client synthesis separately from individual client updates.
+Present synthesis separately from any individual updates.
+Write: _build/cross-client-synthesis-[date].md
 ```
 
-### Wave 5-C — Build Theme Hubs (PARALLEL with 5-B)
+### Wave 5-C — Build Theme Hubs ✅ DONE
+
+**Completed:** 12 theme hubs built during initial build. Theme hubs are now updated incrementally during each client digestion session (sessions update relevant theme files as they discover client connections).
+
+**Current themes (12):** animal-health-pet-consumer, bfy-wellness-consumer, challenger-brand-strategy, dtc-to-retail-transition, glp-1-consumer-opportunity, juice-lrb-decline, personal-care-beauty-evolution, post-acquisition-brand-architecture, premium-natural-defense, protein-sports-nutrition, trade-retail-strategy + _index.md.
+
+**New themes may emerge during Phases 3-5 digestion.** The cross-client synthesis session (template above) includes theme discovery as step 3. Any new theme with 3+ connected clients gets its own hub.
+
+**Theme hub template** (for reference — used in initial build, reused when new themes emerge):
 
 ```
-Read _build/CONTEXT.md for project context.
-⚠️ WRITE CHECK: Verify your working directory is seurat-brain-v2 (not seurat-brain). All writes go to v2 only.
-Read _build/decisions.md — check for cross-client connections and pattern candidates logged during Wave 5-A/5-B. These inform theme hub creation.
-COORDINATION: Log theme-level discoveries to _build/decisions.md if themes intersect with ongoing Wave 5-B synthesis.
-
-TIMING: This session reads client profiles and patterns.md which Wave 5-B may be updating concurrently. Read these files at the START of your session and work from that snapshot. If Wave 5-B logs significant updates to decisions.md while you're working, check whether they affect your theme hub construction. The Wave 5 Quality Gate will reconcile any gaps.
-
-Read: clients/_index.md
-Read: knowledge/patterns.md
-Read all client profiles in clients/
-Read old brain theme files for reference:
-C:\Users\NickFisher\Dropbox (Personal)\Nick's Personal Dropbox (Nickfisher518@gmail.com)\seurat-brain\Intelligence\Themes\
-(read all .md files)
-
-YOUR TASK: Build thematic hubs — cross-client strategic clusters that emerge from the data.
-
-Themes emerge from THREE sources:
-1. Client profiles — what themes are tagged in each profile?
-2. Patterns — which patterns cluster around similar dynamics?
-3. Old brain themes — which v1 themes are validated by current v2 data?
-
-For each theme with 3+ connected clients, create:
-intelligence/themes/[theme-name].md
-
 # [Theme Name]
 Last updated: [today's date]
 Source: Built from client profiles, patterns, and v1 brain themes during v2 build.
@@ -2196,37 +2664,25 @@ Connected clients: [N] | BD prospects: [N]
 ## Connected Clients
 | Client | Relevance | Evidence Strength | Status |
 |--------|-----------|-------------------|--------|
-[For each: why they connect, how strong the evidence, active/lapsed]
 see: clients/[client].md for each
 
 ## Key Insights
-[What we've learned from working across multiple clients in this space.]
-[NOT generic market facts. Seurat-specific learnings.]
-[Example: "Channel fragmentation is structural in personal care — seen across Henkel, Bolton, Beautycounter. The channel question changes the strategy question." ]
-[Each insight should cite source: "Observed in Henkel WS1 (Feb 2026) and Bolton fieldwork (Jan 2026)"]
+[Seurat-specific learnings, NOT generic market facts. Cite sources.]
 
 ## BD Relevance
-[Which prospects in bd/pipeline.md connect? What's the selling angle?]
 see: bd/selling-playbook.md#[relevant area]
-see: bd/pipeline.md
 
 ## Related Patterns
 see: patterns.md#P[N], #P[N]
 
 ## Cross-Theme Connections
-[Which other themes intersect?]
 see: intelligence/themes/[other-theme].md
 
 ## Open Questions
 [What we don't know. What would be valuable to learn.]
-
-Create index: intelligence/themes/_index.md
-One-line per theme: name, description, client count, BD prospect count.
-
-QUALITY BAR: A theme hub answers: "If I'm starting a new engagement in this space, what does Seurat already know that gives us an edge?" If a theme can't answer that with specific examples, it's not ready — keep it as a tag in client profiles only.
-
-CUT any theme with fewer than 3 connected clients.
 ```
+
+QUALITY BAR: CUT any theme with fewer than 3 connected clients.
 
 ### Wave 5 Quality Gate (1 session)
 
@@ -2737,44 +3193,31 @@ Nick's maintenance reference:
 
 ## PART IX: ONGOING OPERATIONS
 
-### Template: Digestion Wave [N]
+### Template: Digestion Session
 
 ```
 Read CLAUDE.md.
-Read: _scripts/output/digestion_priority.md
 Run: python _scripts/digestion_engine.py status
-
-Digest the next batch of clients from the priority list.
 
 NOTE: All script commands below assume working directory is the brain root folder.
 
 First, check for changes since last run:
 python _scripts/digestion_engine.py scan --changed-only
-(This re-scans and identifies files with new content_hash — even previously digested clients may have new content.)
+(Re-scans and identifies files with new content_hash.)
 
-For each of the next 5 unprocessed clients:
+Then use the appropriate template from Part V:
+- "Client Deep Digestion" — for new clients (extract everything, multi-pass)
+- "Client Depth Pass" — for previously profiled clients needing exhaustive extraction
+- "BD/Tiny Bulk Classification" — for folders with <100 files
+- "Cross-Client Synthesis" — after completing a tier
 
-1. Extract: python _scripts/digestion_engine.py extract --client "[Name]" --latest-only --limit 30
-   (Downloads via API, extracts highest version of each file group, skips Old/ folders, deletes temp files. Draft-only files tagged `confidence: draft`. Skips files already extracted with unchanged content_hash.)
-2. Read the extracts
-3. Check if clients/[client].md exists — if yes, read it. If no, prepare to create it.
-4. Synthesize:
-   - Client profile update/creation
-   - Pattern evidence (new or additions to existing)
-   - Lesson candidates
-   - BD signals
-   - Theme connections
-5. Present to me for approval. Include provenance for every claim.
-6. Write approved content. Update cross-references.
+Key differences from old approach:
+- NO --limit flag. Extract all eligible files per pass.
+- TWO extraction passes: --finals-only first, then --latest-only for the rest.
+- COMPLETION CHECKLIST must be met before marking a client as done.
+- Check status after: python _scripts/digestion_engine.py status --client "[Name]"
 
-Every 3rd wave, do cross-client synthesis:
-- Patterns with strengthened evidence?
-- New themes emerging?
-- Selling intelligence coalescing?
-- Process docs that need updating based on what we're seeing?
-
-Check status: python _scripts/digestion_engine.py status
-Update digestion_priority.md with progress notes.
+After each tier is complete, run Cross-Client Synthesis.
 ```
 
 ### Template: Weekly Curation
@@ -2827,17 +3270,44 @@ Write: _docs/monthly-review-[YYYY-MM].md
 
 ## Execution Summary
 
-| Part | Wave | Sessions | What It Delivers |
-|------|------|----------|-----------------|
-| I | 1 + QG | 1 + test | Architecture, CLAUDE.md, .claude/ config, skeleton, decisions.md |
-| II | 2A-C + QG | 3 + 1 | Patterns, lessons, BD intel, client profiles, cross-refs validated |
-| III | 3A-C + QG | 3 + test | Process docs (quant, qual, survey, deliverables, discovery, PM, project types, close-out) |
-| IV | 4A-B + QG | 2 + test | Dropbox API digestion engine (scan + extract + content hash registry + .dropboxignore) |
-| V | 5Pre(A-D) + 5A-C + QG | 15-18 + 1 | Public Drive scanned + digested (debriefs→patterns/lessons, process resources, training, growth papers, campfires), active clients digested (1 per session for priority, 2-3 per session for others), theme hubs built, cross-client synthesis, survey content extraction |
-| VI | 6A-C + QG | 3 + 1 | Meeting notes + survey pipeline ported, GitHub plugin built, survey pattern library |
-| VII | 7A-B + QG | 2 + test | Daily brief system + curation workflow + health monitoring |
-| VIII | 8A-B | 2 | Comprehensive testing + setup guide |
-| **Total** | | **~37-44** | **Complete firm-wide knowledge + execution system** |
+| Part | Status | Sessions | What It Delivers |
+|------|--------|----------|-----------------|
+| I | ✅ Done | 1 + QG | Architecture, CLAUDE.md, .claude/ config, skeleton, decisions.md |
+| II | ✅ Done | 3 + 1 | Patterns, lessons, BD intel, client profiles, cross-refs validated |
+| III | ✅ Done | 3 + QG | Process docs (quant, qual, survey, deliverables, discovery, PM, project types, close-out) |
+| IV | ✅ Done | 2 + QG | Dropbox API digestion engine (scan + extract + content hash registry) |
+| V-Public | ✅ Done | ~12 | Public Drive digested: debriefs, process resources, training, growth papers, campfires, case studies, 5 practice areas |
+| V-Clients | 🔄 Active | ~35-40 est. | Depth-first: active clients exhaustively digested, then recent, then lapsed data-rich, then BD/tiny classified. Multi-pass extraction (finals → latest). Completion checklist per client. |
+| V-QG | ⬜ After V | 2-3 | Numbering reconciliation, oversized file splitting, cross-ref validation, retrieval tests |
+| VI | ⬜ Deferred | 3 + 1 | Meeting notes + survey pipeline ported, GitHub plugin built |
+| VII | ⬜ Deferred | 2 + QG | Daily brief system + curation workflow + health monitoring |
+| VIII | ⬜ Deferred | 2 | Comprehensive testing + setup guide |
+| **Total** | | **~60-65** | **Complete firm-wide knowledge + execution system** |
+
+### Effort by Phase
+
+| Phase | What | Sessions | Status |
+|-------|------|----------|--------|
+| Parts I-IV | Foundation + migration + pipeline | 13 | ✅ Complete |
+| V-Public Drive | Non-client content digestion | 12 | ✅ Complete |
+| V-Phase 2A (Active Clients) | 13 active clients, depth-first, multi-pass | 15-20 | 🔄 8 initial + depth passes needed |
+| V-Phase 2B (Recent from Batches) | Depth passes on Batch 1-2 clients | 8-10 | 🔄 Batch 2 running, then depth |
+| V-Phase 3 (Recent Data-Rich) | 20 recent clients with 1000+ files | 10-12 | ⬜ After active clients complete |
+| V-Phase 4 (Lapsed Data-Rich) | 13 lapsed clients with 3000+ files (GMI, Rich's, Harman, etc.) | 8-10 | ⬜ |
+| V-Phase 5 (BD/Tiny) | Bulk classify ~380 folders <100 files (incl. phantom P&G, Coke, J&J) | 2 | ⬜ |
+| V-Quality Gates | Synthesis after each tier, file fixes | 3-4 | ⬜ After each tier |
+| VI-VIII (Post-Digestion) | Skills, automation, testing, deploy | 8 | ⬜ Deferred |
+
+### Recommended Post-Digestion Sequence
+
+After Part V quality gate passes, the brain is usable as a knowledge system. The remaining parts make it a team tool:
+
+1. **Daily Brief (VII-A)** — 1 session. Independent of skills. Starts intelligence accumulation immediately. Do this first because it compounds daily.
+2. **Oversized file splitting** — 1 session. qual-research.md, quant-research.md, survey-fieldwork.md all >15KB. Fix before skills reference them.
+3. **Skills port (VI-A/B/C)** — 3 parallel sessions. Port meeting notes + survey pipeline + build plugin. This makes the brain useful for the whole team.
+4. **Skills QG (VI-QG)** — 1 session. End-to-end test with real inputs.
+5. **Curation process (VII-B)** — 1 session. Weekly maintenance workflow.
+6. **Testing + Deployment (VIII-A/B)** — 2 sessions. Scenario testing + setup guide. Then pilot with 2-3 users.
 
 ---
 
@@ -2857,3 +3327,5 @@ Write: _docs/monthly-review-[YYYY-MM].md
 | Web browser automation for Dropbox | Lossy (preview rendering strips notes, formatting, hidden content), fragile at scale, slow, auth complexity. The API gives full-fidelity file access. | Only for sources without APIs (competitor websites, etc.) |
 | OCR for scanned PDFs | Too slow for batch processing, requires tesseract install. Scanned PDFs are flagged as 'partial' extraction for future handling. | When a specific scanned PDF contains critical knowledge worth the effort |
 | Agent mail / inter-agent messaging (MCP Agent Mail) | Plan is designed with parallel-safe waves + quality gates + `_build/decisions.md` for coordination. Adding an MCP server introduces infrastructure overhead (port management, SQLite locks, message delivery) without proportional value for a single-curator build. | Post-build: when autonomous agents run digestion + curation + intelligence in parallel without Nick pasting prompts |
+| `/project` context loader | A command like `/project henkel hair-care` that auto-loads: client profile, all project extracts from SQLite registry, recent meeting notes from the project's Dropbox folder, relevant survey doc versions, and survey-patterns.md. Two modes: general (CLAUDE.md routing, already works) and project-specific (full context pull). Requires the digestion engine's SQLite registry to be populated, which happens during this build. | Post-build: after Wave 5 digestion populates the registry and Wave 7 establishes the curation workflow. Build as a slash command in Wave 8 or as a post-launch enhancement. |
+| Nightly scan + extract cron | Scheduled task running `scan --changed-only` + `extract --pending` every night. Detects new/changed files and extracts them automatically. Weekly `/curation` session then synthesizes the new extracts into brain knowledge. For a ~15-person firm producing 20-50 new files/week, weekly synthesis keeps the brain current within days. | Post-build: after initial digestion is complete and the engine is stable. Set up as Windows Task Scheduler or cron job. |
