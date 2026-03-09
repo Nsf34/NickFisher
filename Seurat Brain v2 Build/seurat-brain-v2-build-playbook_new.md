@@ -128,8 +128,10 @@ PART IV: DATA PIPELINE (Dropbox API)
   Wave 4-QG               Quality gate: test scan + extract on 1 client
 
 PART V: DIGESTION
-  Wave 5-Pre-A [1 session]  Scan Public Drive structure + build digestion plan               SEQUENTIAL
-  Wave 5-Pre-B [1-2 sessions] Extract + digest Public Drive priority content                SEQUENTIAL (after 5-Pre-A)
+  Wave 5-Pre-A [1 session]   Scan Public Drive structure + build digestion plan              SEQUENTIAL
+  Wave 5-Pre-B [3 sessions]  Extract + digest Project Debriefs (297 files, highest ROI)    SEQUENTIAL (after 5-Pre-A)
+  Wave 5-Pre-C [2 sessions]  Extract + digest Process Resources + Training                 PARALLEL with 5-A
+  Wave 5-Pre-D [2 sessions]  Extract + digest Growth Papers + Campfires + Case Studies     PARALLEL with 5-B (or later)
   Wave 5-A [1 session]    Digest active clients batch 1 (5 priority)    SEQUENTIAL
   Wave 5-B [1 session]    Digest active clients batch 2                 ──┐
   Wave 5-C [1 session]    Build theme hubs from emerged data            ├─ PARALLEL (after 5-A)
@@ -1646,84 +1648,329 @@ Show:
 Do NOT extract or digest any files. This session is reconnaissance only.
 ```
 
-### Wave 5-Pre-B — Extract + Digest Public Drive Content (SEQUENTIAL — run after 5-Pre-A)
+### Wave 5-Pre-B — Extract + Digest Project Debriefs (SEQUENTIAL — highest ROI)
 
+Why first: 297 structured post-mortem documents for ~300 past engagements. Small .docx files totaling just 23 MB. These directly feed patterns.md and lessons.md — the two most important knowledge files in the brain. This is the single highest-ROI extraction in the entire build.
+
+Run 3 sessions sequentially. Each session extracts ~100 debriefs, reads them, and synthesizes into patterns + lessons. Session 2 and 3 read what session 1 wrote and build on it.
+
+**Session 1 of 3: Extract all debriefs + synthesize first batch**
 ```
 Read _build/CONTEXT.md for project context.
 ⚠️ WRITE CHECK: Verify your working directory is seurat-brain-v2 (not seurat-brain). All writes go to v2 only.
-Read _build/decisions.md — read ALL entries, especially the Wave 5-Pre-A Public Drive structure discovery.
-Read _build/public-drive-digestion-plan.md — this is your extraction roadmap. Follow the priority order.
-COORDINATION: Log extraction discoveries (process knowledge gaps found, new topics not covered by existing docs, surprises) to _build/decisions.md. If multiple 5-Pre-B sessions are needed, subsequent sessions read these notes.
+Read _build/decisions.md — read ALL entries, especially Wave 5-Pre-A Public Drive structure.
+Read _build/public-drive-digestion-plan.md — understand the full Public Drive map.
+COORDINATION: Log debrief synthesis discoveries to _build/decisions.md. Sessions 2-3 depend on these notes.
 
-YOUR TASK: Extract and digest the next batch of high-value Public Drive content. If this is the FIRST 5-Pre-B session, start with Tier 1 highest-priority folders. If this is a CONTINUATION session, check _build/decisions.md for what was already covered and pick up where the last session left off.
+YOUR TASK: Extract ALL 297 project debriefs from the Public Drive and synthesize the first ~100 into patterns and lessons.
 
-STEP 1: Extract content
-python digestion_engine.py extract --root "/Nick Fisher/Seurat Group -- Public Drive" --latest-only --limit 40 [--folder "path/to/priority/folder" if the engine supports folder targeting]
+STEP 1: Extract ALL debriefs (they're tiny — 23 MB total, all .docx)
+Extract the entire 03 Knowledge Management / 03 Project Debriefs folder. These are small files — extract all 297 in one run, do not limit.
+python digestion_engine.py extract --root "/Nick Fisher/Seurat Group -- Public Drive" --folder "03 Knowledge Management/03 Project Debriefs" --latest-only
 
-If the engine doesn't support folder-level targeting for non-client paths, extract in priority order from the digestion plan and stop at ~40 files per session.
+If the engine doesn't support --folder targeting, extract with a high limit to get all debriefs:
+python digestion_engine.py extract --root "/Nick Fisher/Seurat Group -- Public Drive" --latest-only --limit 300
 
-Skip: HR docs, expense templates, IT setup guides, calendar invites, headshots, logos, administrative files.
-Focus: Anything that teaches someone HOW the firm works, WHAT methods to use, or WHY certain approaches are preferred.
+STEP 2: Read the existing knowledge files
+Read: knowledge/patterns.md (current patterns with provenance)
+Read: knowledge/lessons.md (current lessons with source engagements)
+Read: clients/_index.md (to connect debriefs to client profiles)
 
-STEP 2: Read ALL extracts from this batch
-Read the extracted content from _scripts/output/extracts/
+STEP 3: Read the first ~100 debrief extracts
+Read extracts from _scripts/output/extracts/ — start with the most recent debriefs (2022-2026) as they reflect current practice.
 
-STEP 3: Read ALL existing process docs
-Read every file in knowledge/processes/ (created in Wave 3, possibly enriched by prior 5-Pre-B sessions).
-Also read: knowledge/patterns.md, knowledge/lessons.md, bd/selling-playbook.md
+STEP 4: Synthesize into patterns and lessons
+For each debrief, extract:
 
-STEP 4: Compare and classify each extract
-For each extracted file, determine:
+a) PATTERNS — Cross-client patterns that emerge from post-mortem reflections:
+   - "What worked" findings that appear across multiple debriefs → pattern candidates
+   - Client/category-specific approaches that succeeded → evidence for existing patterns
+   - Methodological insights (which research approaches yielded the best results for which questions)
+   - For each pattern: note the debrief source, client, project type, and confidence level
 
-a) PROCESS KNOWLEDGE — Does this contain process knowledge NOT already in knowledge/processes/?
-   → If yes: draft additions to the relevant process doc, or create a new process doc if it's a distinct topic
-   → Likely new topics: proposal-building, growth-paper-writing, campfire-preparation, new-business-pitching, analyst-onboarding, slide-design-principles, data-visualization
+b) LESSONS — Operational lessons from what went wrong or what was learned:
+   - "What we'd do differently" → lesson candidates
+   - Timeline/scope issues → lessons about project planning
+   - Client management insights → lessons about stakeholder handling
+   - Methodology limitations discovered → lessons about method selection
+   - For each lesson: note the debrief source, severity (minor/significant/critical), and whether it's been resolved
 
-b) DEEPER COVERAGE — Does this explain something at a higher or deeper level than what Wave 3 captured?
-   → If yes: incorporate the additional depth (specific steps, decision criteria, examples, edge cases)
-   → Wave 3 distilled from the old brain's docs, which were Nick's personal notes. Public Drive training decks may have the firm's "official" version with more rigor.
+c) CLIENT INTELLIGENCE — Facts about specific clients:
+   - Stakeholder preferences, decision-making patterns
+   - Category-specific nuances discovered during the engagement
+   - Follow-on opportunities mentioned
+   → Flag these for updating clients/[client].md (don't update client files in this session — just note what to update)
 
-c) TEMPLATES & EXAMPLES — Does this contain templates or examples useful for a new analyst?
-   → If yes: note the exact Dropbox path and add a reference: "Template available: [Public Drive path]"
-   → Do NOT copy template files into the brain. Just reference where they live.
+d) PROCESS INTELLIGENCE — Insights about how Seurat works:
+   - Recurring process issues mentioned across debriefs
+   - Best practices confirmed by multiple teams
+   → Flag these for updating knowledge/processes/ files
 
-d) GROWTH PAPERS / THOUGHT LEADERSHIP — Published or polished intellectual property?
-   → If yes: create or update intelligence/growth-papers.md with title, topic, key arguments, date, author if known
-   → Note connections to themes (Wave 5-C) and selling angles (bd/selling-playbook.md)
+STEP 5: Draft updates to patterns.md and lessons.md
+- For EXISTING patterns/lessons: add new evidence citations with debrief source
+- For NEW pattern candidates: draft in full pattern format with confidence: emerging, evidence count, source debriefs
+- For NEW lesson candidates: draft in full lesson format with status: provisional, source debriefs
+- Keep a running tally: "X new patterns, Y new lessons, Z evidence additions"
 
-e) BRAND SPEC / FORMATTING — Slide banks, design standards, visual rules?
-   → If yes: verify knowledge/processes/deliverable-production.md captures this. Update if not.
-   → Slide bank inventories (what slides exist, naming conventions) are valuable reference.
-
-f) TRAINING CONTENT — Structured training for analysts/new hires?
-   → If yes: this is GOLD. Training decks often explain the "why" behind processes better than process docs.
-   → Create knowledge/processes/analyst-training.md if enough training content exists, or fold into relevant process docs.
-
-STEP 5: Draft updates
-For each knowledge file that needs enrichment:
-- Draft the specific additions (show only new content, not entire files)
-- Add "Source: Public Drive / [folder] / [filename]" provenance for every new piece
-- Keep files under 15KB — if a file would exceed this, propose how to split it
-- If a topic deserves its own process doc, draft it with full structure
-
-STEP 6: Present to Nick for approval
+STEP 6: Present to Nick
 Show:
-1. Files extracted and reviewed (count + list)
-2. Process docs to be updated (which ones, what's being added, from which source)
-3. New process docs proposed (topic, estimated size, source files)
-4. Growth papers found (titles, topics)
-5. Templates referenced (paths added to process docs)
-6. What was skipped and why
-7. Coverage progress: what % of the digestion plan is complete? What remains for the next session?
+1. Debriefs extracted (count, date range, client spread)
+2. New patterns proposed (with evidence from debriefs)
+3. New lessons proposed (with source debriefs)
+4. Evidence additions to existing patterns/lessons
+5. Client intelligence flagged for future update
+6. Process intelligence flagged for future update
+7. "Batch 1 of 3 complete. [100] debriefs synthesized, [197] remaining."
 
-Wait for Nick's approval before writing ANY updates to knowledge files.
+Wait for Nick's approval before writing to patterns.md or lessons.md.
 
-PROVENANCE: For every addition, note the source:
-"Source: Public Drive / [folder path] / [filename]"
-
-If this batch does NOT complete all Tier 1 content from the digestion plan, end with:
-"Tier 1 coverage: [X]% complete. Remaining folders: [list]. Recommend [N] more 5-Pre-B session(s)."
+PROVENANCE: For every addition:
+"Source: Public Drive / 03 Knowledge Management / 03 Project Debriefs / [filename]"
 ```
+
+**Session 2 of 3: Synthesize next ~100 debriefs**
+```
+Read _build/CONTEXT.md for project context.
+⚠️ WRITE CHECK: Verify your working directory is seurat-brain-v2 (not seurat-brain). All writes go to v2 only.
+Read _build/decisions.md — read ALL entries, especially Session 1 debrief synthesis notes.
+COORDINATION: Log new discoveries to _build/decisions.md. Session 3 reads these.
+
+YOUR TASK: Continue synthesizing project debriefs. Session 1 covered ~100. You're handling the next ~100.
+
+STEP 1: Read what Session 1 produced
+Read: knowledge/patterns.md (now updated with Session 1 findings)
+Read: knowledge/lessons.md (now updated with Session 1 findings)
+Read: _build/decisions.md Session 1 notes (which debriefs were covered, what was found)
+
+STEP 2: Read the next ~100 debrief extracts
+Read extracts that Session 1 did NOT cover. Prioritize by recency, then by client relevance.
+
+STEP 3: Synthesize using the same framework (patterns, lessons, client intel, process intel)
+Key difference from Session 1: you're now BUILDING ON existing patterns and lessons, not starting fresh. Look for:
+- Additional evidence for patterns/lessons Session 1 identified
+- New patterns that only emerge when you see a larger sample
+- Contradictions — debriefs that disagree with Session 1 findings (flag these, don't silently resolve)
+
+STEP 4: Present to Nick (same format as Session 1)
+End with: "Batch 2 of 3 complete. [200] debriefs synthesized, [97] remaining."
+
+Wait for approval before writing.
+```
+
+**Session 3 of 3: Final batch + consolidation**
+```
+Read _build/CONTEXT.md for project context.
+⚠️ WRITE CHECK: Verify your working directory is seurat-brain-v2 (not seurat-brain). All writes go to v2 only.
+Read _build/decisions.md — read ALL entries from Sessions 1-2.
+COORDINATION: Log final synthesis to _build/decisions.md. Wave 5-Pre-C and 5-A depend on these.
+
+YOUR TASK: Synthesize the final ~97 debriefs AND do a consolidation pass across ALL 297.
+
+STEP 1: Read Sessions 1-2 outputs
+Read: knowledge/patterns.md, knowledge/lessons.md
+Read: _build/decisions.md Sessions 1-2 notes
+
+STEP 2: Synthesize remaining ~97 debriefs (same framework)
+
+STEP 3: Consolidation pass
+Now that ALL 297 debriefs are synthesized, do a quality pass:
+- Are any patterns actually the same pattern described differently? Merge them.
+- Are any lessons duplicates? Consolidate.
+- Which patterns have the MOST evidence? Rank by evidence count.
+- Which lessons are most critical? Flag the top 5.
+- Are there obvious gaps — project types or methodologies with NO debrief coverage?
+
+STEP 4: Present final summary to Nick
+Show:
+1. Final pattern count (new + existing with added evidence)
+2. Final lesson count (new + existing with added evidence)
+3. Top 10 patterns by evidence strength
+4. Top 5 most critical lessons
+5. Client intelligence backlog (list of client profiles needing updates, with what to add)
+6. Process intelligence backlog (list of process docs needing updates)
+7. Coverage gaps (project types or time periods with no debriefs)
+
+Wait for approval before final writes.
+```
+
+### Wave 5-Pre-C — Extract + Digest Process Resources + Training (PARALLEL with Wave 5-A)
+
+This can run alongside client digestion — it enriches process knowledge but doesn't block client work.
+
+Run 2 sessions. Session 1 handles Process Resources (234 files). Session 2 handles Training materials (150 files).
+
+**Session 1: Process Resources (04 Resources / 03 Process Resources)**
+```
+Read _build/CONTEXT.md for project context.
+⚠️ WRITE CHECK: Verify your working directory is seurat-brain-v2 (not seurat-brain). All writes go to v2 only.
+Read _build/decisions.md — read ALL entries, especially debrief synthesis findings from 5-Pre-B.
+Read _build/public-drive-digestion-plan.md — locate Process Resources folder details.
+COORDINATION: Log process knowledge discoveries to _build/decisions.md.
+
+YOUR TASK: Extract and digest the firm's official Process Resources. These are the canonical methodology documents — potentially more authoritative than the old brain docs that Wave 3 distilled from.
+
+IMPORTANT CONTEXT: Wave 3 built process docs from Nick's personal notes in the old brain. The Public Drive Process Resources may contain the firm's "official" versions with more rigor, different perspectives, or content Nick's notes didn't capture. Treat Public Drive sources as potentially MORE authoritative than what's already in the brain.
+
+ALSO: 5-Pre-A discovered 170 .md files in the AI Playbook subfolder. Check if these are directly importable structured knowledge before extracting them as raw files.
+
+STEP 1: Extract Process Resources
+python digestion_engine.py extract --root "/Nick Fisher/Seurat Group -- Public Drive" --folder "04 Resources/03 Process Resources" --latest-only
+
+STEP 2: Read ALL existing process docs
+Read every file in knowledge/processes/:
+- quant-research.md, qual-research.md, survey-fieldwork.md
+- deliverable-production.md, discovery.md, inputs-review.md
+- project-management.md, project-close-out.md
+
+STEP 3: Read extracts and compare
+For each extracted file:
+
+a) Does this REPLACE or significantly upgrade an existing process doc?
+   → If yes: draft the upgraded version, noting what changed and why the Public Drive source is better
+   → Wave 3 docs were Nick's synthesis. Public Drive docs may be the firm's official training materials.
+
+b) Does this ADD to an existing process doc?
+   → If yes: draft additions with provenance
+
+c) Does this cover a NEW topic not in knowledge/processes/?
+   → Likely new topics from Process Resources: proposal-building, new-business-process, analyst-onboarding, data-visualization, syndicated-data, slide-design
+   → If yes: draft a new process doc
+
+d) Is this an AI Playbook .md file that can be directly imported or adapted?
+   → If yes: note which files and propose where they fit in the brain structure
+
+STEP 4: Present to Nick
+Show side-by-side: "Current process doc says X. Public Drive source says Y. Recommendation: [merge/replace/keep current]."
+Wait for approval before writing.
+
+PROVENANCE: "Source: Public Drive / 04 Resources / 03 Process Resources / [filename]"
+```
+
+**Session 2: Training Materials (01 People Development)**
+```
+Read _build/CONTEXT.md for project context.
+⚠️ WRITE CHECK: Verify your working directory is seurat-brain-v2 (not seurat-brain). All writes go to v2 only.
+Read _build/decisions.md — read ALL entries, especially Session 1 Process Resources findings.
+COORDINATION: Log training content discoveries to _build/decisions.md.
+
+YOUR TASK: Extract and digest training materials from People Development. Focus on:
+- 01/01/02 Training / Research (~80 files) — How-to decks for Discovery, Qual, Quant, Syndicated
+- 01/01/04 Training / Management (~30 files) — Leadership methodology, RACI, project leadership
+- 01/03 JiT Training Materials (~40 files) — Operational how-tos for day-to-day work
+
+Skip: 01/01/01 (onboarding logistics), 01/01/03 (tools/tech setup), 01/02 (performance reviews), personal development plans.
+
+STEP 1: Extract training materials
+python digestion_engine.py extract --root "/Nick Fisher/Seurat Group -- Public Drive" --folder "01 People Development" --latest-only --limit 150
+
+STEP 2: Read existing process docs (including any updates from Session 1)
+
+STEP 3: Compare and synthesize
+Training decks often explain the "WHY" behind processes better than process docs. They contain:
+- Worked examples that illustrate methodology
+- Decision trees for choosing between approaches
+- Common mistakes with explanations (not just lists)
+- The firm's intellectual frameworks presented for teaching
+
+For each training extract:
+a) Does it deepen understanding of an existing process? → Draft enrichment
+b) Does it reveal a process or framework not yet in the brain? → Draft new doc
+c) Does it contain reusable examples or decision frameworks? → Note for inclusion
+
+STEP 4: Present to Nick (same format — current vs. new, recommendations)
+Wait for approval before writing.
+
+PROVENANCE: "Source: Public Drive / 01 People Development / [folder] / [filename]"
+```
+
+### Wave 5-Pre-D — Extract + Digest Growth Papers + Campfires + Case Studies (PARALLEL with Wave 5-B or later)
+
+This is intellectual capital — the firm's published thinking and internal knowledge-sharing. Lower urgency than process knowledge but high value for BD, themes, and selling intelligence. Can run alongside or after client digestion.
+
+Run 2 sessions. Session 1 handles Growth Papers (63 papers, ~1,265 files with versions). Session 2 handles Campfires + Case Studies.
+
+**Session 1: Growth Papers (04 Resources / 02 Growth Papers)**
+```
+Read _build/CONTEXT.md for project context.
+⚠️ WRITE CHECK: Verify your working directory is seurat-brain-v2 (not seurat-brain). All writes go to v2 only.
+Read _build/decisions.md — read ALL entries.
+COORDINATION: Log growth paper discoveries to _build/decisions.md. These connect to themes (Wave 5-C) and selling angles.
+
+YOUR TASK: Extract and catalog the firm's complete Growth Paper library. There are 63 numbered papers — the firm's published thought leadership corpus.
+
+STEP 1: Extract Growth Papers (highest versions only)
+python digestion_engine.py extract --root "/Nick Fisher/Seurat Group -- Public Drive" --folder "04 Resources/02 Growth Papers" --latest-only
+(1,265 total files but most are versions/drafts. With --latest-only, expect ~63-100 unique papers.)
+
+STEP 2: Read and catalog each paper
+For each Growth Paper, extract:
+- Paper number and title
+- Topic/thesis (one sentence)
+- Key arguments (3-5 bullets)
+- Category/industry focus
+- Date published (from file metadata or content)
+- Author(s) if identifiable
+- Connections to: client work, patterns, themes, selling angles
+
+STEP 3: Create intelligence/growth-papers.md
+Structure:
+- Index table: Paper # | Title | Topic | Category | Date | Connected Themes
+- For each paper: summary paragraph + key arguments + connections
+- Group by theme cluster if natural groupings emerge
+
+STEP 4: Cross-reference
+- Which growth papers support selling angles in bd/selling-playbook.md? Note connections.
+- Which growth papers connect to existing patterns in patterns.md? Note evidence.
+- Which growth papers map to intelligence/themes/ topics? Flag for Wave 5-C.
+
+STEP 5: Present to Nick
+Show: complete catalog + proposed theme connections + BD selling angle connections.
+Wait for approval before writing.
+
+PROVENANCE: "Source: Public Drive / 04 Resources / 02 Growth Papers / [paper folder] / [filename]"
+```
+
+**Session 2: Campfires + Case Studies (03 Knowledge Management)**
+```
+Read _build/CONTEXT.md for project context.
+⚠️ WRITE CHECK: Verify your working directory is seurat-brain-v2 (not seurat-brain). All writes go to v2 only.
+Read _build/decisions.md — read ALL entries.
+COORDINATION: Log Campfire/case study discoveries to _build/decisions.md.
+
+YOUR TASK: Extract and digest Campfire presentations (2020-2026) and internal case studies. These contain the firm's internal intellectual capital — what was shared at quarterly all-hands meetings.
+
+WARNING: 5-Pre-A noted that 2025 Campfire files average 238 MB each (likely video-embedded PPTX). Text extraction will still work but downloads will be slow. Budget for longer extraction times.
+
+STEP 1: Extract Campfires (most recent first)
+python digestion_engine.py extract --root "/Nick Fisher/Seurat Group -- Public Drive" --folder "03 Knowledge Management/00 Campfires" --latest-only
+Start with 2024-2026. If time allows, continue to 2020-2023.
+
+STEP 2: Extract Case Studies
+python digestion_engine.py extract --root "/Nick Fisher/Seurat Group -- Public Drive" --folder "03 Knowledge Management/01 Internal Case Studies" --latest-only
+python digestion_engine.py extract --root "/Nick Fisher/Seurat Group -- Public Drive" --folder "04 Resources/04 Case Studies for Decks" --latest-only
+
+STEP 3: Read and synthesize
+For Campfires:
+- What topics were presented? (firm strategy, methodology updates, client case studies, market trends)
+- Any methodology changes announced? → Update relevant process docs
+- Any strategic direction signals? → Note for BD and themes
+- Who presented what? → Note for people intelligence
+
+For Case Studies:
+- What client/project is featured?
+- What was the approach and finding?
+- Is this already captured in the client profile? If not, flag for update.
+- Are there reusable case study slides for BD purposes? → Note paths for selling-playbook.md
+
+STEP 4: Present to Nick
+Show: Campfire topic map, case study catalog, proposed knowledge updates.
+Wait for approval before writing.
+
+PROVENANCE: "Source: Public Drive / 03 Knowledge Management / [folder] / [filename]"
+```
+
+**Practice Areas (04 Resources / 00 Practice Areas) — NOT scheduled as a wave.**
+1,684 files across 5 practice areas (FLI alone is 710 files, 24.8 GB). This is too large for the pre-digestion phase and will overlap heavily with client folder digestion. Practice area content is best absorbed organically during Wave 5-A/B/C client digestion — when you're already reading deliverables from these practice areas. If specific gaps remain after client digestion, schedule targeted extraction sessions post-Wave 5.
 
 ### Wave 5-A — Digest Active Clients Batch 1 (SEQUENTIAL — first batch)
 
@@ -2570,11 +2817,11 @@ Write: _docs/monthly-review-[YYYY-MM].md
 | II | 2A-C + QG | 3 + 1 | Patterns, lessons, BD intel, client profiles, cross-refs validated |
 | III | 3A-C + QG | 3 + test | Process docs (quant, qual, survey, deliverables, discovery, PM, project types, close-out) |
 | IV | 4A-B + QG | 2 + test | Dropbox API digestion engine (scan + extract + content hash registry + .dropboxignore) |
-| V | 5Pre(A-B) + 5A-C + QG | 5-6 + 1 | Public Drive scanned + digested, active clients digested, theme hubs built, cross-client synthesis, survey content extraction |
+| V | 5Pre(A-D) + 5A-C + QG | 10-12 + 1 | Public Drive scanned + digested (debriefs→patterns/lessons, process resources, training, growth papers, campfires), active clients digested, theme hubs built, cross-client synthesis, survey content extraction |
 | VI | 6A-C + QG | 3 + 1 | Meeting notes + survey pipeline ported, GitHub plugin built, survey pattern library |
 | VII | 7A-B + QG | 2 + test | Daily brief system + curation workflow + health monitoring |
 | VIII | 8A-B | 2 | Comprehensive testing + setup guide |
-| **Total** | | **~27-32** | **Complete firm-wide knowledge + execution system** |
+| **Total** | | **~32-38** | **Complete firm-wide knowledge + execution system** |
 
 ---
 
